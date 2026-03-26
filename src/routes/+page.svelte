@@ -1,5 +1,5 @@
 <script>
-	import Cal from '$lib/client/components/organisms/Cal.svelte';
+	import Cal from '$lib/client/components/organisms/Cal';
 	import { PUBLIC_CAL_LINK } from '$env/static/public';
 </script>
 
@@ -12,9 +12,9 @@
 			>
 			pour lire la documentation
 		</p>
-		<!--<div style="height: 600px; width: 100%;">
+		<div style="height: 600px; width: 100%;">
 			<Cal embedType="inline" namespace="my-meeting" calLink="thibaut-dupuy-r9qkan/30min" />
-		</div>-->
+		</div>
 		<!--<Cal embedType="floatingButton" namespace="15min" calLink="thibaut-dupuy-r9qkan/30min" />-->
 		<!--<Cal namespace="15min" />
 		<button
