@@ -12,9 +12,9 @@
 			>
 			pour lire la documentation
 		</p>
-		<div style="height: 600px; width: 100%;">
+		<!--<div style="height: 600px; width: 100%;">
 			<Cal embedType="inline" namespace="my-meeting" calLink="thibaut-dupuy-r9qkan/30min" />
-		</div>
+		</div>-->
 		<!--<Cal embedType="floatingButton" namespace="15min" calLink="thibaut-dupuy-r9qkan/30min" />-->
 		<!--<Cal namespace="15min" />
 		<button

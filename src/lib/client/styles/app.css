@@ -1,7 +1,58 @@
 @import 'tailwindcss';
 @plugin 'daisyui' {
-	themes:
-		pastel --default,
-		dark --prefersdark,
-		cupcake;
+	themes: violet-perso --default;
+}
+@plugin 'daisyui/theme' {
+	name: 'violet-perso';
+	default: true;
+	prefersdark: false;
+	color-scheme: light;
+
+	/* Fonds */
+	--color-base-100: oklch(98% 0.02 500); /* #ffffff / fond cartes */
+	--color-base-200: oklch(95% 0.04 300); /* #f5eaff / fond chips */
+	--color-base-300: oklch(90% 0.06 300); /* #e8d5f5 / bordures */
+	--color-base-content: oklch(32% 0.1 300); /* #5c3d7a / texte principal */
+
+	/* Primary — violet */
+	--color-primary: oklch(72% 0.15 300); /* #c9a0e8 */
+	--color-primary-content: oklch(100% 0 0); /* #ffffff */
+
+	/* Secondary — rose */
+	--color-secondary: oklch(75% 0.13 340); /* #e8a0c8 */
+	--color-secondary-content: oklch(100% 0 0); /* #ffffff */
+
+	/* Accent — bleu */
+	--color-accent: oklch(72% 0.12 230); /* #85b4e8 */
+	--color-accent-content: oklch(100% 0 0); /* #ffffff */
+
+	/* Neutral */
+	--color-neutral: oklch(32% 0.1 300); /* #5c3d7a */
+	--color-neutral-content: oklch(98% 0.02 300); /* #fdf6ff */
+
+	/* États sémantiques */
+	--color-info: oklch(72% 0.12 230);
+	--color-info-content: oklch(100% 0 0);
+	--color-success: oklch(72% 0.15 150);
+	--color-success-content: oklch(100% 0 0);
+	--color-warning: oklch(80% 0.18 80);
+	--color-warning-content: oklch(20% 0.05 80);
+	--color-error: oklch(68% 0.2 10);
+	--color-error-content: oklch(100% 0 0);
+
+	/* Border radius */
+	--radius-selector: 0.5rem;
+	--radius-field: 0.375rem;
+	--radius-box: 1rem;
+
+	/* Tailles de base */
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+
+	/* Bordure */
+	--border: 1px;
+
+	/* Effets */
+	--depth: 0;
+	--noise: 0;
 }
