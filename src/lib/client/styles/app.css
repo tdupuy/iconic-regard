@@ -52,7 +52,6 @@
 	color-scheme: light;
 
 	/* Fonds */
-	--color-base-100: oklch(98% 0.02 500); /* #ffffff / fond cartes */
 	--color-base-200: oklch(95% 0.04 300); /* #f5eaff / fond chips */
 	--color-base-300: oklch(90% 0.06 300); /* #e8d5f5 / bordures */
 	--color-base-content: oklch(32% 0.1 300); /* #5c3d7a / texte principal */
