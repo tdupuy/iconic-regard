@@ -1,1 +1,1 @@
-export { default } from './Cal.svelte';
+export { default } from './cal.svelte';
