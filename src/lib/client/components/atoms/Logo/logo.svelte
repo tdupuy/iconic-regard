@@ -5,6 +5,5 @@
 <img
 	src={logoUrl}
 	alt="Iconic Regard"
-	class="anim-float anim-1 mb-[clamp(0.5rem,2vw,1rem)] object-contain drop-shadow-lg"
-	style="width:clamp(120px,30vw,220px);height:clamp(120px,30vw,220px);"
+	class="animate-float mb-3 h-[clamp(120px,30vw,220px)] w-[clamp(120px,30vw,220px)] rounded-full object-contain drop-shadow-lg"
 />

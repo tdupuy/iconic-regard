@@ -1,6 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&family=Lato:wght@300&display=swap');
 @import 'tailwindcss';
 
+@theme {
+	--animate-float: float 6s ease-in-out infinite;
+
+	@keyframes float {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-10px);
+		}
+	}
+}
 :root {
 	--font-title: 'Cormorant Garamond', ui-serif, Georgia, serif;
 	--font-body:
@@ -52,9 +65,10 @@
 	color-scheme: light;
 
 	/* Fonds */
-	--color-base-200: oklch(95% 0.04 300); /* #f5eaff / fond chips */
-	--color-base-300: oklch(90% 0.06 300); /* #e8d5f5 / bordures */
-	--color-base-content: oklch(32% 0.1 300); /* #5c3d7a / texte principal */
+	--color-base-100: oklch(98% 0.02 300); /* #fdf6ff / fond général */
+	--color-base-200: rgb(180, 142, 207); /* #f5eaff / fond chips */
+	--color-base-300: #e8d5f5; /* #e8d5f5 / bordures */
+	--color-base-content: rgb(92, 61, 122); /* #5c3d7a / texte principal */
 
 	/* Primary — violet */
 	--color-primary: oklch(72% 0.15 300); /* #c9a0e8 */
