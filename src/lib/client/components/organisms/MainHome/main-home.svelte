@@ -16,15 +16,3 @@
 	<!-- Droite : grille de cartes -->
 	<Menu />
 </main>
-
-<style>
-	@keyframes floatOrb {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-18px);
-		}
-	}
-</style>
