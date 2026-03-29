@@ -6,13 +6,13 @@
 
 <!-- Orb violet (primary) -->
 <div
-	class="pointer-events-none fixed -bottom-20 -left-20 h-[450px] w-[450px] rounded-full"
+	class="animate-orb pointer-events-none fixed -bottom-20 -left-20 h-[450px] w-[450px] rounded-full"
 	style="background: radial-gradient(circle, oklch(from var(--color-primary) l c h / 0.25) 0%, transparent 70%);"
 ></div>
 
 <!-- Orb bleu (accent) -->
 <div
-	class="pointer-events-none fixed top-1/2 right-[5%] h-[200px] w-[200px] rounded-full"
+	class="animate-orb-rev pointer-events-none fixed top-1/2 right-[5%] h-[200px] w-[200px] rounded-full"
 	style="background: radial-gradient(circle, oklch(from var(--color-accent) l c h / 0.2) 0%, transparent 70%);"
 ></div>
 
