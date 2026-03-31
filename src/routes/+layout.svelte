@@ -5,9 +5,14 @@
 	import Background from '$lib/client/components/organisms/Background';
 	import Footer from '$lib/client/components/organisms/Footer';
 	//import favicon from '$lib/assets/favicon.svg';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 </script>
+
+<svelte:head>
+	<title>Iconic Regard{page.data.title ? ` | ${page.data.title}` : ''}</title>
+</svelte:head>
 
 <app data-theme="violet-perso">
 	<div class="bg-base-100 relative min-h-screen overflow-hidden">
