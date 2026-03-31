@@ -11,11 +11,14 @@
 	<BookingMenu />
 	<ContactMenu />
 	<GalleryMenu />-->
+	<Tile href="#prestations" id="prestations" label="Découvrir" title="Mes Prestations" />
 	<Tile
-		href="#prestations"
-		id="prestations"
-		label="Découvrir"
-		title="Mes Prestations"
-		highlighted
+		href="#rdv"
+		id="rdv"
+		label="Disponibilités"
+		title="Prendre rendez-vous"
+		buttonText="Réserver →"
 	/>
+	<Tile href="#contact" id="contact" label="Contact" title="Me contacter" />
+	<Tile href="#galerie" id="galerie" label="Galerie" title="Mes réalisations" />
 </div>
