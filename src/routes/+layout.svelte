@@ -6,6 +6,7 @@
 	import Footer from '$lib/client/components/organisms/Footer';
 	//import favicon from '$lib/assets/favicon.svg';
 	import { page } from '$app/state';
+	import Navbar from '$lib/client/components/organisms/Navbar';
 
 	let { children } = $props();
 </script>
@@ -15,8 +16,10 @@
 </svelte:head>
 
 <app data-theme="violet-perso">
+	<Navbar />
 	<div class="bg-base-100 relative min-h-screen overflow-hidden">
 		<Background />
+
 		<div class="relative z-10 flex min-h-screen flex-col">
 			<Header />
 			{@render children()}
