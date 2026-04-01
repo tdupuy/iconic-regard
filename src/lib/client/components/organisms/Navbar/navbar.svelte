@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { Menu } from 'lucide-svelte';
+	import PopOverMenu from '$lib/client/components/molecules/PopOverMenu/';
+	let menuOpen = $state(false);
 </script>
 
 <div class="navbar bg-base-100 shadow-sm">
@@ -10,6 +12,18 @@
 		>
 			Prendre rendez-vous
 		</button>
-		<Menu class="text-base-content h-6 w-6" />
+
+		<button
+			type="button"
+			class="btn btn-ghost btn-square text-base-content"
+			onclick={() => (menuOpen = true)}
+			aria-label="Ouvrir le menu"
+		>
+			<Menu class="h-6 w-6" />
+		</button>
 	</div>
 </div>
+
+{#if menuOpen}
+	<PopOverMenu onClose={() => (menuOpen = false)} />
+{/if}
