@@ -4,7 +4,7 @@
 </script>
 
 <main
-	class="flex flex-1 flex-col items-center justify-center gap-[clamp(2rem,6vw,7rem)]
+	class="flex flex-1 flex-col items-center gap-[clamp(2rem,6vw,7rem)]
                  px-[clamp(1rem,5vw,2rem)]
                  pt-[clamp(0.5rem,2vw,1rem)]
                  pb-[clamp(2rem,5vw,3rem)]
