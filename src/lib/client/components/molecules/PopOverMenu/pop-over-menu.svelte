@@ -34,11 +34,12 @@
 				class=" font-title text-base-content m-0 text-center text-4xl leading-tight font-extralight"
 				>Mes réalisations</a
 			>
-			<button
+			<a
+				href="/booking"
 				class="btn text-base-100 shadow-secondary/20 from-secondary to-primary rounded-full border-0 bg-gradient-to-r px-8 py-2 text-xl tracking-normal italic shadow-lg transition-transform hover:scale-[1.02]"
 			>
 				Prendre rendez-vous
-			</button>
+			</a>
 		</div>
 	</div>
 </div>

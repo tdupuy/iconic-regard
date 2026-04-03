@@ -12,7 +12,7 @@
 		Icon={ClipboardList}
 	/>
 	<Tile
-		href="#rdv"
+		href="/booking"
 		id="rdv"
 		label="Disponibilités"
 		title="Prendre rendez-vous"
