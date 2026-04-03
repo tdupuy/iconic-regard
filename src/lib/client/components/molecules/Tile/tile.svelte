@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { Icon as LucideIcon } from 'lucide-svelte';
-	type AnchorRoute = `/#${string}`;
 
 	let {
-		href = '#' as AnchorRoute,
+		href = '#',
 		id,
 		label,
 		title,
@@ -12,7 +11,7 @@
 		buttonText = '',
 		Icon
 	}: {
-		href?: AnchorRoute;
+		href?: string;
 		id: string;
 		label: string;
 		title: string;
@@ -23,7 +22,7 @@
 </script>
 
 <a
-	href={resolve(href)}
+	{href}
 	{id}
 	class="bg-base-100/70 border-base-300 flex flex-col
                   items-center gap-[clamp(0.38rem,1vw,0.6rem)] rounded-[clamp(14px,3vw,20px)]
