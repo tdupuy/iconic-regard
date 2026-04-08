@@ -19,7 +19,9 @@
 <app data-theme="violet-perso">
 	<Navbar />
 	<div class="bg-base-100 relative min-h-screen overflow-hidden">
-		<Breadcrumb />
+		{#if page.url.pathname !== '/'}
+			<Breadcrumb />
+		{/if}
 		<Background />
 
 		<div class="relative z-10 flex min-h-screen flex-col">
