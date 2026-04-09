@@ -9,7 +9,7 @@
 	<div class="md:hidden">
 		<ServiceItem
 			namespace={service.slug}
-			imgUrl="src/lib/client/assets/lash-lift-corean.webp"
+			imgUrl={'/assets/' + service.imgName}
 			category={service.category}
 			service={service.name}
 			duration={service.duration + ' min'}
@@ -21,7 +21,7 @@
 		<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 			<ServiceItem
 				namespace={service.slug}
-				imgUrl="src/lib/client/assets/lash-lift-corean.webp"
+				imgUrl={'/assets/' + service.imgName}
 				category={service.category}
 				service={service.name}
 				duration={service.duration + ' min'}

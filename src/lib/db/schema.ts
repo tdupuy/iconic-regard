@@ -7,5 +7,6 @@ export const services = pgTable('services', {
 	category: varchar('category', { length: 100 }).notNull(),
 	slug: varchar('slug', { length: 100 }).notNull().unique(),
 	duration: integer('duration').notNull(),
-	price: varchar('price', { length: 50 }).notNull()
+	price: varchar('price', { length: 50 }).notNull(),
+	imgName: varchar('img_name', { length: 255 })
 });
