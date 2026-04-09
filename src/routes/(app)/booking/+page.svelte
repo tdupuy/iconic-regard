@@ -1,5 +1,7 @@
 <script lang="ts">
 	import ServiceItem from '$lib/client/components/organisms/ServiceItem';
+	const { data } = $props();
+	console.log(data);
 </script>
 
 <!-- Loop Between both components -->
