@@ -1,18 +1,12 @@
-import { pgTable, serial, varchar, timestamp, text } from 'drizzle-orm/pg-core';
-export const users = pgTable('users', {
+import { pgTable, serial, varchar, text, integer } from 'drizzle-orm/pg-core';
+
+export const services = pgTable('services', {
 	id: serial('id').primaryKey(),
-	nom: varchar('nom', { length: 100 }).notNull(),
-	prenom: varchar('prenom', { length: 100 }).notNull(),
-	codePostal: varchar('code_postal', { length: 10 })
-});
-export const rendezvous = pgTable('rendezvous', {
-	id: serial('id').primaryKey(),
-	userId: serial('user_id').references(() => users.id),
-	date: timestamp('date').notNull(),
-	note: text('note')
-});
-export const articles = pgTable('articles', {
-	id: serial('id').primaryKey(),
-	titre: varchar('titre', { length: 200 }).notNull(),
-	contenu: text('contenu').notNull()
+	name: varchar('name', { length: 100 }).notNull().unique(),
+	description: text('description').notNull(),
+	category: varchar('category', { length: 100 }).notNull(),
+	slug: varchar('slug', { length: 100 }).notNull().unique(),
+	duration: integer('duration').notNull(),
+	price: varchar('price', { length: 50 }).notNull(),
+	imgName: varchar('img_name', { length: 255 })
 });
