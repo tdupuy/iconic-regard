@@ -2,13 +2,16 @@
 	import { slide } from 'svelte/transition';
 	import Cal from '$lib/client/components/organisms/Cal';
 	import { PUBLIC_CAL_LINK } from '$env/static/public';
+	import { Heart } from 'lucide-svelte';
+
 	let {
 		namespace,
 		imgUrl,
 		category,
 		service,
 		duration,
-		price
+		price,
+		description
 	}: {
 		namespace: string;
 		imgUrl: string;
@@ -16,8 +19,21 @@
 		service: string;
 		duration: string;
 		price: string;
+		description: string;
 	} = $props();
 	let expanded = $state(false);
+
+	let imageExists = $state(false);
+
+	async function checkImage(url: string) {
+		try {
+			const res = await fetch(url, { method: 'HEAD' });
+			imageExists = res.ok;
+		} catch {
+			imageExists = false;
+		}
+	}
+	checkImage(imgUrl);
 </script>
 
 <Cal {namespace} />
@@ -27,7 +43,13 @@
 >
 	<div class="mb-4 flex items-center">
 		<div class="mr-4 h-16 w-16 overflow-hidden rounded-full border-2 border-purple-300">
-			<img src={imgUrl} alt="Lash Lift" class="h-full w-full object-cover" />
+			{#if imageExists}
+				<img src={imgUrl} alt="Lash Lift" class="h-full w-full object-cover" />
+			{:else}
+				<div class="flex h-full w-full items-center justify-center bg-purple-100">
+					<Heart class="h-4 w-4 text-purple-400" fill="transparent" />
+				</div>
+			{/if}
 		</div>
 		<div class="flex-1">
 			<p
@@ -71,9 +93,7 @@
 			class="mt-4 rounded-lg bg-purple-50 p-4 text-sm text-slate-700"
 		>
 			<p class="m-0 leading-6">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lectus nec interdum
-				consequat, nibh lectus porta elit, at blandit felis mauris a turpis. Integer vitae justo ut
-				ligula consequat fermentum. Curabitur in mattis odio, eu pulvinar mauris.
+				{description}
 			</p>
 		</div>
 	{/if}

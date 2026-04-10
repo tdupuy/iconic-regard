@@ -9,7 +9,7 @@
 <PageTitle title={data.title} />
 <!-- Loop Between both components -->
 {#each data.services as service (service.id)}
-	<div class="md:hidden">
+	<div class="mt-3 md:hidden">
 		<ServiceItem
 			namespace={service.slug}
 			imgUrl={'/assets/' + service.imgName}
@@ -17,6 +17,7 @@
 			service={service.name}
 			duration={service.duration + ' min'}
 			price={service.price + ' €'}
+			description={service.description}
 		/>
 	</div>
 
@@ -29,6 +30,7 @@
 				service={service.name}
 				duration={service.duration + ' min'}
 				price={service.price + ' €'}
+				description={service.description}
 			/>
 		</div>
 	</div>
