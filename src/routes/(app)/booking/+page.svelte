@@ -1,9 +1,12 @@
 <script lang="ts">
 	import ServiceItem from '$lib/client/components/organisms/ServiceItem';
+	import { PageTitle } from '$lib/client/components/atoms/PageTitle';
 	const { data } = $props();
+
 	console.log(data);
 </script>
 
+<PageTitle title={data.title} />
 <!-- Loop Between both components -->
 {#each data.services as service (service.id)}
 	<div class="md:hidden">
