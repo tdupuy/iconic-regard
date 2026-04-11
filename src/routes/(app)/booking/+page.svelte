@@ -29,7 +29,7 @@
 		{
 			cardBorder: 'border-accent',
 			border: 'border-accent',
-			bgImg: 'b-accent/20',
+			bgImg: 'bg-accent/20',
 			iconImg: 'text-accent',
 			textCategory: 'text-accent',
 			textService: 'text-accent-content',
