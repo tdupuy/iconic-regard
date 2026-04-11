@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import type { Icon as LucideIcon } from 'lucide-svelte';
 
 	let {

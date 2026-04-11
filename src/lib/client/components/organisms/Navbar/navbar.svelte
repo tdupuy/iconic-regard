@@ -5,7 +5,11 @@
 </script>
 
 <div class="navbar bg-base-100 shadow-sm">
-	<div class="flex-1"></div>
+	<div class="flex-1">
+		<a href="/" class="">
+			<img src="assets/navbar_icon.png" alt="Iconic Regard" class="h-10 w-auto" />
+		</a>
+	</div>
 	<div class="mr-2 flex flex-none items-center gap-3">
 		<a
 			href="/booking"

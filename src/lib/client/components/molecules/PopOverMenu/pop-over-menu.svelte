@@ -22,21 +22,22 @@
 			<a
 				href="#"
 				class=" font-title text-base-content m-0 text-center text-4xl leading-tight font-extralight"
-				>Mes Prestations</a
+				onclick={onClose}>Mes Prestations</a
 			>
 			<a
 				href="#"
 				class="font-title text-base-content m-0 text-center text-4xl leading-tight font-extralight"
-				>Me contacter</a
+				onclick={onClose}>Me contacter</a
 			>
 			<a
 				href="#"
 				class=" font-title text-base-content m-0 text-center text-4xl leading-tight font-extralight"
-				>Mes réalisations</a
+				onclick={onClose}>Mes réalisations</a
 			>
 			<a
 				href="/booking"
 				class="btn text-base-100 shadow-secondary/20 from-secondary to-primary rounded-full border-0 bg-gradient-to-r px-8 py-2 text-xl tracking-normal italic shadow-lg transition-transform hover:scale-[1.02]"
+				onclick={onClose}
 			>
 				Prendre rendez-vous
 			</a>

@@ -5,7 +5,6 @@
 	import Background from '$lib/client/components/organisms/Background';
 	import Footer from '$lib/client/components/organisms/Footer';
 	import Breadcrumb from '$lib/client/components/molecules/Breadcrumb';
-	//import favicon from '$lib/assets/favicon.svg';
 	import { page } from '$app/state';
 	import Navbar from '$lib/client/components/organisms/Navbar';
 
@@ -13,6 +12,7 @@
 </script>
 
 <svelte:head>
+	<link rel="icon" type="image/png" href="assets/favicon.png" />
 	<title>Iconic Regard{page.data.title ? ` | ${page.data.title}` : ''}</title>
 </svelte:head>
 
