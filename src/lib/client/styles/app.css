@@ -102,11 +102,11 @@
 
 	/* Secondary — rose */
 	--color-secondary: oklch(75% 0.13 340); /* #e8a0c8 */
-	--color-secondary-content: oklch(100% 0 0); /* #ffffff */
+	--color-secondary-content: oklch(40% 0.2 15);
 
 	/* Accent — bleu */
-	--color-accent: oklch(72% 0.12 230); /* #85b4e8 */
-	--color-accent-content: oklch(100% 0 0); /* #ffffff */
+	--color-accent: oklch(78% 0.1 270);
+	--color-accent-content: oklch(32% 0.12 270);
 
 	/* Neutral */
 	--color-neutral: oklch(32% 0.1 300); /* #5c3d7a */
