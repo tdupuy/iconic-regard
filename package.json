@@ -54,6 +54,7 @@
 		"vitest-browser-svelte": "^2.0.2"
 	},
 	"dependencies": {
+		"@icons-pack/svelte-simple-icons": "^6.5.0",
 		"lucide-svelte": "^1.0.1"
 	}
 }
