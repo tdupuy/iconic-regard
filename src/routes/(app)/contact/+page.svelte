@@ -9,18 +9,18 @@
 
 <div class="mt-5 mb-10 flex flex-col items-center gap-4">
 	<a
-		href="tel:+33612345678"
+		href="tel:+33623306352"
 		class="text-base-content mt-2 flex flex-row items-center gap-4 text-center text-[clamp(1rem,1vw,1.5rem)]"
 	>
 		<Phone size={28} strokeWidth={1.5} />
-		06 12 34 56 78
+		06 23 30 63 52
 	</a>
 	<a
-		href="mailto:ilovesodomie@gmail.com"
+		href="mailto:iconic-regard@gmail.com"
 		class="text-base-content mt-2 flex flex-row items-center gap-4 text-center text-[clamp(1rem,1vw,1.5rem)]"
 	>
 		<AtSign size={28} strokeWidth={1.5} />
-		ilovesodomie@gmail.com
+		iconic-regard@gmail.com
 	</a>
 </div>
 
@@ -28,18 +28,20 @@
 
 <div class="mt-5 mb-10 flex flex-col items-center gap-4">
 	<a
-		href="tel:+33612345678"
+		href="https://www.instagram.com/iconic_regard?igsh=MTliZXlwbmE4M3ExZA=="
+		target="_blank"
 		class="text-base-content mt-2 flex flex-row items-center gap-4 text-center text-[clamp(1rem,1vw,1.5rem)]"
 	>
 		<SiInstagram size={28} />
-		06 12 34 56 78
+		@iconic_regard
 	</a>
 	<a
-		href="mailto:ilovesodomie@gmail.com"
+		href="https://www.facebook.com/profile.php?id=61580708107829"
+		target="_blank"
 		class="text-base-content mt-2 flex flex-row items-center gap-4 text-center text-[clamp(1rem,1vw,1.5rem)]"
 	>
 		<SiFacebook size={28} />
-		ilovesodomie@gmail.com
+		iconicregard
 	</a>
 </div>
 

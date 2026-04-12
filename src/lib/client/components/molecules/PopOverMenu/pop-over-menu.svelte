@@ -25,7 +25,7 @@
 				onclick={onClose}>Mes Prestations</a
 			>
 			<a
-				href="#"
+				href="/contact"
 				class="font-title text-base-content m-0 text-center text-4xl leading-tight font-extralight"
 				onclick={onClose}>Me contacter</a
 			>
