@@ -44,6 +44,10 @@
 	let imageExists = $state(false);
 
 	async function checkImage(url: string) {
+		if (!url || url === 'null' || url === 'undefined') {
+			imageExists = false;
+			return;
+		}
 		try {
 			const res = await fetch(url, { method: 'HEAD' });
 			imageExists = res.ok;

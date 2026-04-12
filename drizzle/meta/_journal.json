@@ -15,6 +15,20 @@
       "when": 1774473988509,
       "tag": "0001_jittery_switch",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775979667974,
+      "tag": "0002_crazy_jane_foster",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1775979984025,
+      "tag": "0003_foamy_psylocke",
+      "breakpoints": true
     }
   ]
 }

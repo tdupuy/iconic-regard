@@ -1,7 +1,17 @@
 <script lang="ts">
 	import ServiceItem from '$lib/client/components/organisms/ServiceItem';
 	import { PageTitle } from '$lib/client/components/atoms/PageTitle';
+	import CategorySelect from '$lib/client/components/molecules/CategorySelect';
+
 	const { data } = $props();
+
+	let selectedCategory = $state(0);
+
+	const filteredServices = $derived(
+		selectedCategory === 0
+			? data.services
+			: data.services.filter((s) => s.category.id === selectedCategory)
+	);
 
 	const colors = [
 		{
@@ -29,7 +39,7 @@
 		{
 			cardBorder: 'border-accent',
 			border: 'border-accent',
-			bgImg: 'b-accent/20',
+			bgImg: 'bg-accent/20',
 			iconImg: 'text-accent',
 			textCategory: 'text-accent',
 			textService: 'text-accent-content',
@@ -38,17 +48,19 @@
 			bgActionBtn: 'bg-accent'
 		}
 	];
+	console.log(data.services);
 </script>
 
 <PageTitle title={data.title} />
+<CategorySelect categories={data.categories} onchange={(id) => (selectedCategory = id)} />
 <!-- Loop Between both components -->
-{#each data.services as service, i (service.id)}
+{#each filteredServices as service, i (service.id)}
 	{@const c = colors[i % colors.length]}
 	<div class="mt-3 md:hidden">
 		<ServiceItem
 			namespace={service.slug}
 			imgUrl={'/assets/' + service.imgName}
-			category={service.category}
+			category={service.category.name}
 			service={service.name}
 			duration={service.duration + ' min'}
 			price={service.price + ' €'}
@@ -60,18 +72,17 @@
 			textCategory={c.textCategory}
 			textService={c.textService}
 			bgTablets={c.bgTablets}
-			titleTablets={c.titleTablets}
 			textTablets={c.textTablets}
 			bgActionBtn={c.bgActionBtn}
 		/>
 	</div>
 
-	<div class="hidden min-h-screen bg-purple-50/10 py-16 md:block">
+	<div class="hidden bg-purple-50/10 py-4 md:block">
 		<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 			<ServiceItem
 				namespace={service.slug}
 				imgUrl={'/assets/' + service.imgName}
-				category={service.category}
+				category={service.category.name}
 				service={service.name}
 				duration={service.duration + ' min'}
 				price={service.price + ' €'}
@@ -83,7 +94,6 @@
 				textCategory={c.textCategory}
 				textService={c.textService}
 				bgTablets={c.bgTablets}
-				titleTablets={c.titleTablets}
 				textTablets={c.textTablets}
 				bgActionBtn={c.bgActionBtn}
 			/>
