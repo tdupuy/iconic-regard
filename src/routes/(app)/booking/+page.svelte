@@ -60,7 +60,6 @@
 			textCategory={c.textCategory}
 			textService={c.textService}
 			bgTablets={c.bgTablets}
-			titleTablets={c.titleTablets}
 			textTablets={c.textTablets}
 			bgActionBtn={c.bgActionBtn}
 		/>
@@ -83,7 +82,6 @@
 				textCategory={c.textCategory}
 				textService={c.textService}
 				bgTablets={c.bgTablets}
-				titleTablets={c.titleTablets}
 				textTablets={c.textTablets}
 				bgActionBtn={c.bgActionBtn}
 			/>
