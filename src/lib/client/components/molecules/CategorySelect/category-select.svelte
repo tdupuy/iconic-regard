@@ -1,6 +1,5 @@
 <script lang="ts">
 	let { categories } = $props();
-	console.log(categories);
 </script>
 
 <div class="flex w-full items-center justify-center">

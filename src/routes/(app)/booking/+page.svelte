@@ -40,6 +40,7 @@
 			bgActionBtn: 'bg-accent'
 		}
 	];
+	console.log(data.services);
 </script>
 
 <PageTitle title={data.title} />
@@ -51,7 +52,7 @@
 		<ServiceItem
 			namespace={service.slug}
 			imgUrl={'/assets/' + service.imgName}
-			category={service.category}
+			category={service.category.name}
 			service={service.name}
 			duration={service.duration + ' min'}
 			price={service.price + ' €'}
@@ -73,7 +74,7 @@
 			<ServiceItem
 				namespace={service.slug}
 				imgUrl={'/assets/' + service.imgName}
-				category={service.category}
+				category={service.category.name}
 				service={service.name}
 				duration={service.duration + ' min'}
 				price={service.price + ' €'}
