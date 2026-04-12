@@ -20,6 +20,6 @@
 		buttonText="Réserver →"
 		Icon={Calendar}
 	/>
-	<Tile href="#contact" id="contact" label="Contact" title="Me contacter" Icon={MessageCircle} />
+	<Tile href="/contact" id="contact" label="Contact" title="Me contacter" Icon={MessageCircle} />
 	<Tile href="#galerie" id="galerie" label="Galerie" title="Mes réalisations" Icon={Image} />
 </div>
