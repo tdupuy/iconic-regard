@@ -69,7 +69,7 @@
 		/>
 	</div>
 
-	<div class="hidden min-h-screen bg-purple-50/10 py-16 md:block">
+	<div class="hidden bg-purple-50/10 py-4 md:block">
 		<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 			<ServiceItem
 				namespace={service.slug}
