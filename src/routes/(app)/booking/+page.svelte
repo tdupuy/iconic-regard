@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ServiceItem from '$lib/client/components/organisms/ServiceItem';
 	import { PageTitle } from '$lib/client/components/atoms/PageTitle';
+	import CategorySelect from '$lib/client/components/molecules/CategorySelect';
 	const { data } = $props();
 
 	const colors = [
@@ -41,6 +42,7 @@
 </script>
 
 <PageTitle title={data.title} />
+<CategorySelect />
 <!-- Loop Between both components -->
 {#each data.services as service, i (service.id)}
 	{@const c = colors[i % colors.length]}

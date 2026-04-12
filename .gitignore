@@ -24,5 +24,8 @@ vite.config.ts.timestamp-*
 # Playwright
 test-results
 
+#BKP
+/bkp/*
+
 #IDE
 /.vscode
