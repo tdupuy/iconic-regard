@@ -5,6 +5,14 @@
 
 	const { data } = $props();
 
+	let selectedCategory = $state(0);
+
+	const filteredServices = $derived(
+		selectedCategory === 0
+			? data.services
+			: data.services.filter((s) => s.category.id === selectedCategory)
+	);
+
 	const colors = [
 		{
 			cardBorder: 'border-purple-600',
@@ -44,9 +52,9 @@
 </script>
 
 <PageTitle title={data.title} />
-<CategorySelect categories={data.categories} />
+<CategorySelect categories={data.categories} onchange={(id) => (selectedCategory = id)} />
 <!-- Loop Between both components -->
-{#each data.services as service, i (service.id)}
+{#each filteredServices as service, i (service.id)}
 	{@const c = colors[i % colors.length]}
 	<div class="mt-3 md:hidden">
 		<ServiceItem

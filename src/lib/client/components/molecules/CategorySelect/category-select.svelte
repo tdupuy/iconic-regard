@@ -1,14 +1,25 @@
 <script lang="ts">
-	let { categories } = $props();
+	let { categories, onchange } = $props();
 </script>
 
 <div class="flex w-full items-center justify-center">
 	<select
-		class="select select-ghost font-title text-base-content focus:border-transparentfocus:border-transparent text-xl focus:bg-transparent focus:shadow-none focus:outline-none"
+		class="select select-ghost font-title text-base-content text-xl
+		focus:border-transparent focus:bg-transparent focus:shadow-none focus:outline-none
+		focus-visible:border-transparent focus-visible:outline-none"
+		onchange={(e) => onchange(Number(e.target.value))}
 	>
-		<option disabled selected>Type de prestation</option>
+		<option value={0} disabled selected>Type de prestation</option>
 		{#each categories as category (category.id)}
 			<option value={category.id}>{category.name}</option>
 		{/each}
 	</select>
 </div>
+
+<style>
+	select:focus {
+		outline: none !important;
+		border-color: transparent !important;
+		box-shadow: none !important;
+	}
+</style>
