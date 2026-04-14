@@ -8,7 +8,8 @@
 		title,
 		highlighted = false,
 		buttonText = '',
-		Icon
+		Icon,
+		target = '_self'
 	}: {
 		href?: string;
 		id: string;
@@ -17,11 +18,13 @@
 		highlighted?: boolean;
 		buttonText?: string;
 		Icon?: typeof LucideIcon;
+		target?: string;
 	} = $props();
 </script>
 
 <a
 	{href}
+	{target}
 	{id}
 	class="bg-base-100/70 border-base-300 flex flex-col
                   items-center gap-[clamp(0.38rem,1vw,0.6rem)] rounded-[clamp(14px,3vw,20px)]

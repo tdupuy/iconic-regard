@@ -21,5 +21,12 @@
 		Icon={Calendar}
 	/>
 	<Tile href="/contact" id="contact" label="Contact" title="Me contacter" Icon={MessageCircle} />
-	<Tile href="#galerie" id="galerie" label="Galerie" title="Mes réalisations" Icon={Image} />
+	<Tile
+		href="https://www.instagram.com/iconic_regard?igsh=MTliZXlwbmE4M3ExZA=="
+		id="galerie"
+		label="Galerie"
+		title="Mes réalisations"
+		target="_blank"
+		Icon={Image}
+	/>
 </div>
