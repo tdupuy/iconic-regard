@@ -75,7 +75,10 @@
 <CategoryServicesSelect
 	categories={data.categories}
 	services={data.services}
-	onchange={(id) => (selectedCategory = id)}
+	onchange={(id) => {
+		const index = filteredServices.findIndex((s) => s.id === id);
+		if (index !== -1) current = index;
+	}}
 />
 <div class="bg-purple-50/10 py-4">
 	<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -88,9 +91,10 @@
 			</button>
 
 			<div class="w-full" ontouchstart={onTouchStart} ontouchend={onTouchEnd}>
-				{#each filteredServices as service, i (service.id)}
+				{#each filteredServices as service (service.id)}
+					{@const i = data.services.findIndex((s) => s.id === service.id)}
 					{@const c = colors[i % colors.length]}
-					{#if i === current}
+					{#if filteredServices.indexOf(service) === current}
 						<ServiceItem
 							namespace={service.slug}
 							imgUrl={'/assets/' + service.imgName}
