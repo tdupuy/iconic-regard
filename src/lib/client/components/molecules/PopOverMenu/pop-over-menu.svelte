@@ -20,7 +20,7 @@
 			class="mt-12 flex flex-1 flex-col items-center justify-start gap-8 px-6 text-2xl font-semibold"
 		>
 			<a
-				href="#"
+				href="/services"
 				class=" font-title text-base-content m-0 text-center text-4xl leading-tight font-extralight"
 				onclick={onClose}>Mes Prestations</a
 			>
@@ -30,7 +30,7 @@
 				onclick={onClose}>Me contacter</a
 			>
 			<a
-				href="#"
+				href="https://www.instagram.com/iconic_regard?igsh=MTliZXlwbmE4M3ExZA=="
 				class=" font-title text-base-content m-0 text-center text-4xl leading-tight font-extralight"
 				onclick={onClose}>Mes réalisations</a
 			>

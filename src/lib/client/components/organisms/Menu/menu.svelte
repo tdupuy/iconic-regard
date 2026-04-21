@@ -5,7 +5,7 @@
 
 <div class="anim-5 grid w-full max-w-[480px] shrink-0 grid-cols-2 gap-[clamp(0.5rem,2vw,0.9rem)]">
 	<Tile
-		href="#prestations"
+		href="/services"
 		id="prestations"
 		label="Découvrir"
 		title="Mes Prestations"

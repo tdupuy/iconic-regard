@@ -1,13 +1,15 @@
 <script lang="ts">
 	let {
 		categories,
+		services,
 		onchange
 	}: {
 		categories: { id: number; name: string; slug: string }[];
+		services: { id: number; name: string; category: { id: number } }[];
 		onchange: (id: number) => void;
 	} = $props();
 
-	let selected = $state<{ id: number; label: string }>({ id: 0, label: 'Type de prestation' });
+	let selected = $state<{ id: number; label: string }>({ id: 0, label: 'Toutes les prestations' });
 	let open = $state(false);
 
 	function select(id: number, label: string) {
@@ -19,6 +21,7 @@
 
 <div class="flex w-full items-center justify-center">
 	<div class="relative">
+		<!-- Trigger -->
 		<button
 			class="font-title text-base-content flex items-center gap-2 text-xl outline-none"
 			onclick={() => (open = !open)}
@@ -38,27 +41,47 @@
 			</svg>
 		</button>
 
+		<!-- Dropdown -->
 		{#if open}
 			<ul
 				class="menu bg-base-100 border-base-200 rounded-box absolute left-1/2 z-50 mt-2 w-56 -translate-x-1/2 border p-1 text-sm shadow-sm"
 			>
+				<li>
+					<button
+						class="rounded-btn {selected.id === 0
+							? 'text-primary font-medium'
+							: 'text-base-content/70'}"
+						onclick={() => select(0, 'Toutes les prestations')}
+					>
+						Toutes les prestations
+					</button>
+				</li>
+
 				{#each categories as category (category.id)}
-					<li>
-						<button
-							class="rounded-btn {selected.id === category.id
-								? 'text-primary font-medium'
-								: 'text-base-content/70'}"
-							onclick={() => select(category.id, category.name)}
-						>
-							{category.name}
-						</button>
+					<li
+						class="menu-title text-base-content/40 px-3 pt-3 pb-1 text-xs tracking-widest uppercase"
+					>
+						{category.name}
 					</li>
+					{#each services.filter((s) => s.category.id === category.id) as service (service.id)}
+						<li>
+							<button
+								class="rounded-btn {selected.id === service.id
+									? 'text-primary font-medium'
+									: 'text-base-content/70'}"
+								onclick={() => select(service.id, service.name)}
+							>
+								{service.name}
+							</button>
+						</li>
+					{/each}
 				{/each}
 			</ul>
 		{/if}
 	</div>
 </div>
 
+<!-- Fermer en cliquant ailleurs -->
 {#if open}
 	<div class="fixed inset-0 z-40" onclick={() => (open = false)} />
 {/if}
