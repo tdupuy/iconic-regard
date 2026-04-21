@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ServiceItem from '$lib/client/components/organisms/ServiceItem';
 	import { PageTitle } from '$lib/client/components/atoms/PageTitle';
-	import CategorySelect from '$lib/client/components/molecules/CategorySelect';
+	import { CategoryServicesSelect } from '$lib/client/components/molecules/CategoryServicesSelect';
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
 
 	const { data } = $props();
@@ -72,8 +72,11 @@
 </script>
 
 <PageTitle title={data.title} />
-<CategorySelect categories={data.categories} onchange={(id) => (selectedCategory = id)} />
-
+<CategoryServicesSelect
+	categories={data.categories}
+	services={data.services}
+	onchange={(id) => (selectedCategory = id)}
+/>
 <div class="bg-purple-50/10 py-4">
 	<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 		<div class="relative flex items-center">
