@@ -7,6 +7,8 @@
 	const { data } = $props();
 	let selectedCategory = $state(0);
 	let current = $state(0);
+	let dragX = $state(0);
+	let dragging = $state(false);
 
 	const filteredServices = $derived(
 		selectedCategory === 0
@@ -62,12 +64,35 @@
 
 	function onTouchStart(e: TouchEvent) {
 		touchStartX = e.touches[0].clientX;
+		dragging = true;
+		dragX = 0;
+	}
+
+	function onTouchMove(e: TouchEvent) {
+		e.preventDefault();
+		dragX = e.touches[0].clientX - touchStartX;
 	}
 
 	function onTouchEnd(e: TouchEvent) {
+		dragging = false;
 		const delta = touchStartX - e.changedTouches[0].clientX;
+		dragX = 0;
 		if (Math.abs(delta) < 50) return;
 		delta > 0 ? next() : prev();
+	}
+
+	function touchHandler(node: HTMLElement) {
+		node.addEventListener('touchstart', onTouchStart, { passive: true });
+		node.addEventListener('touchmove', onTouchMove, { passive: false });
+		node.addEventListener('touchend', onTouchEnd, { passive: true });
+
+		return {
+			destroy() {
+				node.removeEventListener('touchstart', onTouchStart);
+				node.removeEventListener('touchmove', onTouchMove);
+				node.removeEventListener('touchend', onTouchEnd);
+			}
+		};
 	}
 </script>
 
@@ -80,6 +105,7 @@
 		if (index !== -1) current = index;
 	}}
 />
+
 <div class="bg-purple-50/10 py-4">
 	<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 		<div class="relative flex items-center">
@@ -90,32 +116,38 @@
 				<ChevronLeft class="h-4 w-4" />
 			</button>
 
-			<div class="w-full" ontouchstart={onTouchStart} ontouchend={onTouchEnd}>
-				{#each filteredServices as service (service.id)}
-					{@const i = data.services.findIndex((s) => s.id === service.id)}
-					{@const c = colors[i % colors.length]}
-					{#if filteredServices.indexOf(service) === current}
-						<ServiceItem
-							namespace={service.slug}
-							imgUrl={'/assets/' + service.imgName}
-							category={service.category.name}
-							service={service.name}
-							duration={service.duration + ' min'}
-							price={service.price + ' €'}
-							description={service.description}
-							cardBorder={c.cardBorder}
-							border={c.border}
-							bgImg={c.bgImg}
-							iconImg={c.iconImg}
-							textCategory={c.textCategory}
-							textService={c.textService}
-							bgTablets={c.bgTablets}
-							textTablets={c.textTablets}
-							bgActionBtn={c.bgActionBtn}
-							isService={true}
-						/>
-					{/if}
-				{/each}
+			<div class="w-full overflow-hidden" use:touchHandler>
+				<div
+					class="flex"
+					style="transform: translateX(calc(-{current * 100}% + {dragX}px));
+                           transition: {dragging ? 'none' : 'transform 0.3s ease-out'};"
+				>
+					{#each filteredServices as service (service.id)}
+						{@const i = data.services.findIndex((s) => s.id === service.id)}
+						{@const c = colors[i % colors.length]}
+						<div class="min-w-full">
+							<ServiceItem
+								namespace={service.slug}
+								imgUrl={'/assets/' + service.imgName}
+								category={service.category.name}
+								service={service.name}
+								duration={service.duration + ' min'}
+								price={service.price + ' €'}
+								description={service.description}
+								cardBorder={c.cardBorder}
+								border={c.border}
+								bgImg={c.bgImg}
+								iconImg={c.iconImg}
+								textCategory={c.textCategory}
+								textService={c.textService}
+								bgTablets={c.bgTablets}
+								textTablets={c.textTablets}
+								bgActionBtn={c.bgActionBtn}
+								isService={true}
+							/>
+						</div>
+					{/each}
+				</div>
 			</div>
 
 			<button
