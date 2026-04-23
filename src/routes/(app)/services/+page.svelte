@@ -112,6 +112,7 @@
 							bgTablets={c.bgTablets}
 							textTablets={c.textTablets}
 							bgActionBtn={c.bgActionBtn}
+							isService={true}
 						/>
 					{/if}
 				{/each}

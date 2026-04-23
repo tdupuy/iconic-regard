@@ -20,7 +20,8 @@
 		textService = '{textService}',
 		bgTablets = '{bgTablets}',
 		textTablets = '{textTablets}',
-		bgActionBtn = '{bgActionBtn}'
+		bgActionBtn = '{bgActionBtn}',
+		isService = false
 	}: {
 		namespace: string;
 		imgUrl: string;
@@ -38,6 +39,7 @@
 		bgTablets?: string;
 		textTablets?: string;
 		bgActionBtn?: string;
+		isService?: boolean;
 	} = $props();
 	let expanded = $state(false);
 
@@ -93,21 +95,23 @@
 		</div>
 	</div>
 	<div class="mt-2 flex justify-center gap-2">
-		<button
-			class="rounded border {border} px-4 py-2 {iconImg} hover:{bgTablets}"
-			onclick={() => (expanded = !expanded)}
-		>
-			{expanded ? 'Voir moins' : 'En savoir plus'}
-		</button>
-		<button
-			class="rounded {bgActionBtn} px-4 py-2 font-medium text-white hover:bg-purple-400"
-			data-cal-link={PUBLIC_CAL_LINK + '/30min'}
-			data-cal-namespace={namespace}
-		>
-			Prendre rdv
-		</button>
+		{#if !isService}
+			<button
+				class="rounded border {border} px-4 py-2 {iconImg} hover:{bgTablets}"
+				onclick={() => (expanded = !expanded)}
+			>
+				{expanded ? 'Voir moins' : 'En savoir plus'}
+			</button>
+			<button
+				class="rounded {bgActionBtn} px-4 py-2 font-medium text-white hover:bg-purple-400"
+				data-cal-link={PUBLIC_CAL_LINK + '/30min'}
+				data-cal-namespace={namespace}
+			>
+				Prendre rdv
+			</button>
+		{/if}
 	</div>
-	{#if expanded}
+	{#if expanded || isService}
 		<div
 			transition:slide={{ duration: 240 }}
 			class="mt-4 rounded-lg {bgTablets} p-4 text-sm text-slate-700"
@@ -115,6 +119,17 @@
 			<p class="m-0 leading-6">
 				{description}
 			</p>
+		</div>
+	{/if}
+	{#if isService}
+		<div class="mt-3 flex justify-center">
+			<button
+				class="rounded {bgActionBtn}  mx-auto px-4 py-2 font-medium text-white hover:bg-purple-400"
+				data-cal-link={PUBLIC_CAL_LINK + '/30min'}
+				data-cal-namespace={namespace}
+			>
+				Prendre rdv
+			</button>
 		</div>
 	{/if}
 </div>
