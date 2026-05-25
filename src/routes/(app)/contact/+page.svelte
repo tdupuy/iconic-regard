@@ -20,7 +20,7 @@
 		class="text-base-content mt-2 flex flex-row items-center gap-4 text-center text-[clamp(1rem,1vw,1.5rem)]"
 	>
 		<AtSign size={28} strokeWidth={1.5} />
-		iconic-regard@gmail.com
+		iconic.regard@gmail.com
 	</a>
 </div>
 
