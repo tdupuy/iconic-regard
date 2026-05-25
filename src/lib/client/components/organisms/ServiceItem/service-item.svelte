@@ -104,7 +104,7 @@
 			</button>
 			<button
 				class="rounded {bgActionBtn} px-4 py-2 font-medium text-white hover:bg-purple-400"
-				data-cal-link={PUBLIC_CAL_LINK + '/30min'}
+				data-cal-link={PUBLIC_CAL_LINK + '/' + namespace}
 				data-cal-namespace={namespace}
 			>
 				Prendre rdv
@@ -125,7 +125,7 @@
 		<div class="mt-3 flex justify-center">
 			<button
 				class="rounded {bgActionBtn}  mx-auto px-4 py-2 font-medium text-white hover:bg-purple-400"
-				data-cal-link={PUBLIC_CAL_LINK + '/30min'}
+				data-cal-link={PUBLIC_CAL_LINK + '/' + namespace}
 				data-cal-namespace={namespace}
 			>
 				Prendre rdv
