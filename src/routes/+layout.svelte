@@ -5,7 +5,8 @@
 	import Background from '$lib/client/components/organisms/Background';
 	import Footer from '$lib/client/components/organisms/Footer';
 	import Breadcrumb from '$lib/client/components/molecules/Breadcrumb';
-	import { page } from '$app/state';
+	import Loader from '$lib/client/components/molecules/Loader';
+	import { page, navigating } from '$app/state';
 	import Navbar from '$lib/client/components/organisms/Navbar';
 
 	let { children } = $props();
@@ -19,6 +20,9 @@
 <app data-theme="violet-perso">
 	<Navbar />
 	<div class="bg-base-100 relative min-h-screen overflow-hidden">
+		{#if navigating.to}
+			<Loader />
+		{/if}
 		{#if page.url.pathname !== '/'}
 			<Breadcrumb />
 		{/if}
