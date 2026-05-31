@@ -1,7 +1,14 @@
 <script lang="ts">
-	import type { LayoutData } from './$types';
+	import '../../lib/client/styles/app.css';
 
-	let { data }: { data: LayoutData } = $props();
+	let { children } = $props();
 </script>
 
-<slot />
+<svelte:head>
+	<link rel="icon" type="image/png" href="assets/favicon.png" />
+	<title>Admin - Iconic Regard</title>
+</svelte:head>
+
+<app data-theme="violet-perso">
+	{@render children()}
+</app>
