@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	async function logout() {
-		await fetch('/admin/logout', { method: 'POST' });
-		goto('/admin/login');
+		await fetch('/logout', { method: 'POST' });
+		goto('/login');
 	}
 </script>
 
