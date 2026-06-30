@@ -1,16 +1,53 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { isPlaceholderEmail } from '$lib/utils';
+
+	type Reason =
+		| { type: 'new' }
+		| { type: 'pending'; matchId: string }
+		| { type: 'duplicate'; matchId: string; fields: ('name' | 'email' | 'phone')[] };
+
+	const fieldLabels: Record<'name' | 'email' | 'phone', string> = {
+		name: 'Nom identique',
+		email: 'Email identique',
+		phone: 'Téléphone identique'
+	};
 
 	let {
 		email,
 		phoneNumber,
-		name
-	}: { email: string | undefined; phoneNumber: string; name: string } = $props();
+		name,
+		reason
+	}: { email: string | undefined; phoneNumber: string; name: string; reason: Reason } = $props();
+
+	const displayEmail = isPlaceholderEmail(email) ? null : email;
 </script>
 
 <div class="card bg-base-100 shadow-sm">
 	<div class="card-body">
 		<h2 class="card-title text-2xl">{name}</h2>
+
+		<!-- bandeau raison -->
+		{#if reason.type === 'new'}
+			<div class="alert alert-info py-2 text-sm">Nouveau client, pas encore enregistré.</div>
+		{:else if reason.type === 'pending'}
+			<div class="alert alert-warning py-2 text-sm">
+				Client en attente de validation.
+				<span class="block font-mono text-xs opacity-60">id : {reason.matchId}</span>
+			</div>
+		{:else if reason.type === 'duplicate'}
+			<div class="alert alert-error py-2 text-sm">
+				<div>
+					<p>Les infos suivantes ont été trouvées sur un autre client :</p>
+					<ul class="mt-1 list-disc pl-4">
+						{#each reason.fields as field}
+							<li>{fieldLabels[field]}</li>
+						{/each}
+					</ul>
+					<span class="mt-1 block font-mono text-xs opacity-60">id : {reason.matchId}</span>
+				</div>
+			</div>
+		{/if}
 
 		<div class="mt-2 flex flex-col gap-1 text-sm text-slate-600">
 			<div class="flex items-center gap-2">
@@ -28,10 +65,10 @@
 						d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"
 					/>
 				</svg>
-				{#if isPlaceholderEmail(email)}
-					<span class="text-slate-400 italic">Non renseigné</span>
+				{#if displayEmail}
+					<span>{displayEmail}</span>
 				{:else}
-					<span>{email}</span>
+					<span class="text-slate-400 italic">Non renseigné</span>
 				{/if}
 			</div>
 			<div class="flex items-center gap-2">
@@ -52,8 +89,16 @@
 				<span>{phoneNumber}</span>
 			</div>
 		</div>
+
 		<div class="card-actions mt-4 justify-end gap-1">
-			<button class="btn btn-success btn-sm">Ajouter</button>
+			<form method="POST" action="?/addCustomer" use:enhance>
+				<input type="hidden" name="name" value={name} />
+				<input type="hidden" name="phoneNumber" value={phoneNumber} />
+				{#if displayEmail}
+					<input type="hidden" name="email" value={displayEmail} />
+				{/if}
+				<button type="submit" class="btn btn-success btn-sm">Ajouter</button>
+			</form>
 			<button class="btn btn-warning btn-sm">Fusionner</button>
 			<button class="btn btn-error btn-sm">Annuler</button>
 		</div>

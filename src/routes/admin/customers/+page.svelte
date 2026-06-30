@@ -19,6 +19,7 @@
 					email={booking.attendees[0]?.email}
 					phoneNumber={booking.attendees[0]?.phoneNumber}
 					name={booking.attendees[0]?.name}
+					reason={booking.reason}
 				/>
 			{/each}
 		</div>
