@@ -31,8 +31,8 @@ export const categories = pgTable('categories', {
 export const customers = pgTable('customers', {
 	id: uuid('id').defaultRandom().primaryKey(),
 	name: varchar('name', { length: 100 }).notNull(),
-	email: varchar('email', { length: 500 }).unique(), // ← 100 → 500
-	phoneNumber: varchar('phone_number', { length: 500 }).notNull().unique(), // ← 20 → 500
+	email: varchar('email', { length: 500 }).unique(),
+	phoneNumber: varchar('phone_number', { length: 500 }).notNull().unique(),
 	status: customerStatusEnum('status').default('pending').notNull(),
 	createdAt: timestamp('created_at').defaultNow().notNull(),
 	updatedAt: timestamp('updated_at').defaultNow().notNull()
