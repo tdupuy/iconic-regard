@@ -2,15 +2,15 @@
 	import { enhance } from '$app/forms';
 	import { isPlaceholderEmail } from '$lib/utils';
 
-	type Reason =
-		| { type: 'new' }
-		| { type: 'pending'; matchId: string }
-		| { type: 'duplicate'; matchId: string; fields: ('name' | 'email' | 'phone')[] };
+	type Reason = {
+		matchId: string;
+		reasons: ('phone_match' | 'email_match' | 'name_match')[];
+	};
 
-	const fieldLabels: Record<'name' | 'email' | 'phone', string> = {
-		name: 'Nom identique',
-		email: 'Email identique',
-		phone: 'Téléphone identique'
+	const reasonLabels: Record<'phone_match' | 'email_match' | 'name_match', string> = {
+		name_match: 'Nom identique',
+		email_match: 'Email identique',
+		phone_match: 'Téléphone identique'
 	};
 
 	let {
@@ -18,37 +18,25 @@
 		phoneNumber,
 		name,
 		reason
-	}: { email: string | undefined; phoneNumber: string; name: string; reason: Reason } = $props();
-
+	}: { email: string | null | undefined; phoneNumber: string; name: string; reason: Reason } =
+		$props();
 	const displayEmail = isPlaceholderEmail(email) ? null : email;
 </script>
 
 <div class="card bg-base-100 shadow-sm">
 	<div class="card-body">
 		<h2 class="card-title text-2xl">{name}</h2>
-
-		<!-- bandeau raison -->
-		{#if reason.type === 'new'}
-			<div class="alert alert-info py-2 text-sm">Nouveau client, pas encore enregistré.</div>
-		{:else if reason.type === 'pending'}
-			<div class="alert alert-warning py-2 text-sm">
-				Client en attente de validation.
-				<span class="block font-mono text-xs opacity-60">id : {reason.matchId}</span>
+		<div class="alert alert-error py-2 text-sm">
+			<div>
+				<p>Les infos suivantes ont été trouvées sur un autre client :</p>
+				<ul class="mt-1 list-disc pl-4">
+					{#each reason.reasons as r (r)}
+						<li>{reasonLabels[r]}</li>
+					{/each}
+				</ul>
+				<span class="mt-1 block font-mono text-xs opacity-60">id : {reason.matchId}</span>
 			</div>
-		{:else if reason.type === 'duplicate'}
-			<div class="alert alert-error py-2 text-sm">
-				<div>
-					<p>Les infos suivantes ont été trouvées sur un autre client :</p>
-					<ul class="mt-1 list-disc pl-4">
-						{#each reason.fields as field}
-							<li>{fieldLabels[field]}</li>
-						{/each}
-					</ul>
-					<span class="mt-1 block font-mono text-xs opacity-60">id : {reason.matchId}</span>
-				</div>
-			</div>
-		{/if}
-
+		</div>
 		<div class="mt-2 flex flex-col gap-1 text-sm text-slate-600">
 			<div class="flex items-center gap-2">
 				<svg
@@ -89,7 +77,6 @@
 				<span>{phoneNumber}</span>
 			</div>
 		</div>
-
 		<div class="card-actions mt-4 justify-end gap-1">
 			<form method="POST" action="?/addCustomer" use:enhance>
 				<input type="hidden" name="name" value={name} />

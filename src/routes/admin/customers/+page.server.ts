@@ -1,78 +1,41 @@
 import type { PageServerLoad, Actions } from './$types';
-import { getBookings } from '$lib/server/cal';
 import { encrypt, decrypt } from '$lib/server/crypto';
 import { db } from '$lib/db';
-import { customers } from '$lib/db/schema';
+import { eq } from 'drizzle-orm';
+import { customers, pendingCustomers } from '$lib/db/schema';
 import { error, fail } from '@sveltejs/kit';
-import { isPlaceholderEmail } from '$lib/utils';
 
 export const load: PageServerLoad = async () => {
 	try {
-		const [bookings, existingCustomers] = await Promise.all([
-			getBookings({ status: 'upcoming' }),
-			db.select().from(customers)
-		]);
+		const rows = await db
+			.select({
+				id: customers.id,
+				name: customers.name,
+				email: customers.email,
+				phoneNumber: customers.phoneNumber,
+				matchedCustomerId: pendingCustomers.matchedCustomerId,
+				reasons: pendingCustomers.reasons
+			})
+			.from(customers)
+			.innerJoin(pendingCustomers, eq(pendingCustomers.customerId, customers.id))
+			.where(eq(customers.status, 'pending'));
 
-		type BookingReason =
-			| { type: 'new' }
-			| { type: 'pending'; matchId: string }
-			| { type: 'duplicate'; matchId: string; fields: ('name' | 'email' | 'phone')[] };
+		type MatchReason = 'phone_match' | 'email_match' | 'name_match';
 
-		const newBookings = bookings.reduce<((typeof bookings)[0] & { reason: BookingReason })[]>(
-			(acc, b) => {
-				const attendee = b.attendees[0];
-				if (!attendee) return acc;
-
-				const bookingPhone = attendee.phoneNumber ?? '';
-				const bookingEmail = isPlaceholderEmail(attendee.email) ? null : attendee.email;
-				const bookingName = attendee.name;
-
-				// exact match non-pending → on n'affiche pas
-				const exactMatch = existingCustomers.find((c) => {
-					if (c.status === 'pending') return false;
-					return (
-						decrypt(c.phoneNumber) === bookingPhone &&
-						(c.email ? decrypt(c.email) : null) === bookingEmail &&
-						c.name === bookingName
-					);
-				});
-				if (exactMatch) return acc;
-
-				// pending match ?
-				const pendingMatch = existingCustomers.find(
-					(c) => c.status === 'pending' && decrypt(c.phoneNumber) === bookingPhone
-				);
-				if (pendingMatch) {
-					acc.push({ ...b, reason: { type: 'pending', matchId: pendingMatch.id } });
-					return acc;
+		const pendingBookings = rows
+			.filter((row) => row.matchedCustomerId !== null)
+			.map((row) => ({
+				id: row.id,
+				name: row.name,
+				email: row.email ? decrypt(row.email) : null,
+				phoneNumber: decrypt(row.phoneNumber),
+				reason: {
+					matchId: row.matchedCustomerId as string,
+					reasons: row.reasons as MatchReason[]
 				}
+			}));
 
-				// doublon partiel ?
-				const partialMatch = existingCustomers.find((c) => {
-					if (c.status === 'pending') return false;
-					const samePhone = decrypt(c.phoneNumber) === bookingPhone;
-					const sameEmail = (c.email ? decrypt(c.email) : null) === bookingEmail;
-					const sameName = c.name === bookingName;
-					return samePhone || sameEmail || sameName;
-				});
-				if (partialMatch) {
-					const fields: ('name' | 'email' | 'phone')[] = [];
-					if (partialMatch.name === bookingName) fields.push('name');
-					if ((partialMatch.email ? decrypt(partialMatch.email) : null) === bookingEmail)
-						fields.push('email');
-					if (decrypt(partialMatch.phoneNumber) === bookingPhone) fields.push('phone');
-					acc.push({ ...b, reason: { type: 'duplicate', matchId: partialMatch.id, fields } });
-					return acc;
-				}
-
-				// nouveau client
-				acc.push({ ...b, reason: { type: 'new' } });
-				return acc;
-			},
-			[]
-		);
-
-		return { bookings: newBookings };
+		return { bookings: pendingBookings };
 	} catch (err) {
 		throw error(500, err instanceof Error ? err.message : 'Erreur');
 	}

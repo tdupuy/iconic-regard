@@ -12,20 +12,18 @@
 				<h2 class="text-xl font-semibold text-slate-900">Nouveaux clients à valider</h2>
 				<span class="badge badge-warning">{data.bookings.length}</span>
 			</div>
-
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{#each data.bookings as booking (booking.id)}
 					<NewCustomerCard
-						email={booking.attendees[0]?.email}
-						phoneNumber={booking.attendees[0]?.phoneNumber}
-						name={booking.attendees[0]?.name}
+						email={booking.email}
+						phoneNumber={booking.phoneNumber}
+						name={booking.name}
 						reason={booking.reason}
 					/>
 				{/each}
 			</div>
 		</section>
 	{/if}
-
 	<section>
 		<h2 class="mb-6 text-xl font-semibold text-slate-900">Liste des clients</h2>
 		<!-- liste de clients existants, à venir -->
