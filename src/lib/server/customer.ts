@@ -1,3 +1,4 @@
+// $lib/server/customers.ts
 import { db } from '$lib/db';
 import { customers } from '$lib/db/schema';
 import { encrypt } from '$lib/server/crypto';
@@ -6,6 +7,7 @@ export interface NewCustomer {
 	name: string;
 	email?: string;
 	phoneNumber: string;
+	status?: 'pending' | 'active';
 }
 
 export async function addCustomer(data: NewCustomer) {
@@ -18,7 +20,7 @@ export async function addCustomer(data: NewCustomer) {
 			name: data.name,
 			email: encryptedEmail,
 			phoneNumber: encryptedPhone,
-			status: 'pending'
+			status: data.status ?? 'active'
 		})
 		.returning();
 

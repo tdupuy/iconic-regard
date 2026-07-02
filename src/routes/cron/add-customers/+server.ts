@@ -1,6 +1,7 @@
 import { json, error, type RequestHandler } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
+import { syncCustomersFromBookings } from '$lib/server/syncBookingUsers';
 
 const CRON_TOKEN = env.CRON_TOKEN;
 
@@ -15,6 +16,6 @@ export const GET: RequestHandler = async ({ request }) => {
 			throw error(401, 'Unauthorized');
 		}
 	}
-
-	return json({ message: 'hello world' });
+	const results = await syncCustomersFromBookings();
+	return json(results);
 };
