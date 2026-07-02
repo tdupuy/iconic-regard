@@ -41,10 +41,19 @@ export async function syncCustomersFromBookings() {
 	]);
 
 	const knownCustomers = [...existingCustomers];
+	const knownBookingUids = new Set(
+		existingCustomers.map((c) => c.bookingUid).filter((uid): uid is string => uid !== null)
+	);
 
-	const results = { created: 0, pending: 0, skipped: 0 };
+	const results = { created: 0, pending: 0, skipped: 0, alreadyProcessed: 0 };
 
 	for (const booking of bookings) {
+		// déjà importé lors d'un run précédent → on ignore complètement
+		if (knownBookingUids.has(booking.uid)) {
+			results.alreadyProcessed++;
+			continue;
+		}
+
 		const attendee = booking.attendees[0];
 		if (!attendee) continue;
 
@@ -52,7 +61,6 @@ export async function syncCustomersFromBookings() {
 		const bookingEmail = isPlaceholderEmail(attendee.email) ? null : (attendee.email ?? null);
 		const bookingName = attendee.name;
 
-		// 1. client actif identique en tout point → rien à faire
 		const exactMatch = knownCustomers.find((c) => {
 			if (c.status === 'pending') return false;
 			return (
@@ -66,7 +74,6 @@ export async function syncCustomersFromBookings() {
 			continue;
 		}
 
-		// 2. doublon partiel → client en pending + trace
 		const match = findMatch(knownCustomers, bookingPhone, bookingEmail, bookingName);
 
 		if (match) {
@@ -74,7 +81,8 @@ export async function syncCustomersFromBookings() {
 				name: bookingName,
 				email: bookingEmail ?? undefined,
 				phoneNumber: bookingPhone,
-				status: 'pending'
+				status: 'pending',
+				bookingUid: booking.uid
 			});
 
 			await db.insert(pendingCustomers).values({
@@ -84,19 +92,21 @@ export async function syncCustomersFromBookings() {
 			});
 
 			knownCustomers.push(newCustomer);
+			knownBookingUids.add(booking.uid);
 			results.pending++;
 			continue;
 		}
 
-		// 3. aucun doublon → client actif
 		const newCustomer = await addCustomer({
 			name: bookingName,
 			email: bookingEmail ?? undefined,
 			phoneNumber: bookingPhone,
-			status: 'active'
+			status: 'active',
+			bookingUid: booking.uid
 		});
 
 		knownCustomers.push(newCustomer);
+		knownBookingUids.add(booking.uid);
 		results.created++;
 	}
 

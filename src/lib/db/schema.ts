@@ -34,6 +34,7 @@ export const customers = pgTable('customers', {
 	email: varchar('email', { length: 500 }).unique(),
 	phoneNumber: varchar('phone_number', { length: 500 }).notNull().unique(),
 	status: customerStatusEnum('status').default('pending').notNull(),
+	bookingUid: varchar('booking_uid', { length: 255 }).unique(), // ← nouveau
 	createdAt: timestamp('created_at').defaultNow().notNull(),
 	updatedAt: timestamp('updated_at').defaultNow().notNull()
 });

@@ -8,6 +8,7 @@ export interface NewCustomer {
 	email?: string;
 	phoneNumber: string;
 	status?: 'pending' | 'active';
+	bookingUid?: string;
 }
 
 export async function addCustomer(data: NewCustomer) {
@@ -20,7 +21,8 @@ export async function addCustomer(data: NewCustomer) {
 			name: data.name,
 			email: encryptedEmail,
 			phoneNumber: encryptedPhone,
-			status: data.status ?? 'active'
+			status: data.status ?? 'active',
+			bookingUid: data.bookingUid
 		})
 		.returning();
 
