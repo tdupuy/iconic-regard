@@ -5,7 +5,7 @@ CREATE TABLE "categories" (
 	CONSTRAINT "categories_name_unique" UNIQUE("name"),
 	CONSTRAINT "categories_slug_unique" UNIQUE("slug")
 );
---> statement-breakpoint
+
 CREATE TABLE "services" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(100) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE "services" (
 	CONSTRAINT "services_name_unique" UNIQUE("name"),
 	CONSTRAINT "services_slug_unique" UNIQUE("slug")
 );
---> statement-breakpoint
-DROP TABLE "articles" CASCADE;--> statement-breakpoint
-DROP TABLE "rendezvous" CASCADE;--> statement-breakpoint
+
+DROP TABLE "articles" CASCADE;
+DROP TABLE "rendezvous" CASCADE;
 DROP TABLE "users" CASCADE;

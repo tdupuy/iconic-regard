@@ -37,3 +37,15 @@ export const customers = pgTable('customers', {
 	createdAt: timestamp('created_at').defaultNow().notNull(),
 	updatedAt: timestamp('updated_at').defaultNow().notNull()
 });
+
+export const pendingCustomers = pgTable('pending_customers', {
+	id: uuid('id').defaultRandom().primaryKey(),
+	customerId: uuid('customer_id')
+		.notNull()
+		.references(() => customers.id, { onDelete: 'cascade' }),
+	matchedCustomerId: uuid('matched_customer_id').references(() => customers.id, {
+		onDelete: 'set null'
+	}),
+	reasons: varchar('reasons', { length: 50 }).array().notNull(), // ex: ['phone_match', 'name_match']
+	createdAt: timestamp('created_at').defaultNow().notNull()
+});
