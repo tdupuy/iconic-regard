@@ -86,7 +86,10 @@
 				{/if}
 				<button type="submit" class="btn btn-success btn-sm">Ajouter</button>
 			</form>
-			<button class="btn btn-warning btn-sm">Fusionner</button>
+			<a
+				href={`/admin/customers/merge?uid1=${reason.matchId}&uid2='123456'`}
+				class="btn btn-warning btn-sm">Fusionner</a
+			>
 			<button class="btn btn-error btn-sm">Annuler</button>
 		</div>
 	</div>

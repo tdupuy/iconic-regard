@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { customers, pendingCustomers } from '$lib/db/schema';
 import { error, fail } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ url }) => {
 	try {
 		const rows = await db
 			.select({
@@ -43,7 +43,11 @@ export const load: PageServerLoad = async () => {
 			phoneNumber: decrypt(customer.phoneNumber)
 		}));
 
-		return { bookings: pendingBookings, customers: activeCustomers };
+		return {
+			bookings: pendingBookings,
+			customers: activeCustomers,
+			mergeError: url.searchParams.get('mergeError')
+		};
 	} catch (err) {
 		throw error(500, err instanceof Error ? err.message : 'Erreur');
 	}
