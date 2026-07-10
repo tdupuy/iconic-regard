@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ToggleCardList } from '$lib/client/components/admin/atoms/ToggleCardList/';
+	import { SearchClient } from '$lib/client/components/admin/atoms/SearchClient/';
 
 	const clients = [
 		{ id: 1, nom: 'Marion Fabien', telephone: '06 12 34 56 78', email: 'marion.fabien@mail.com' },
@@ -51,25 +52,7 @@
 <section>
 	<h2 class="mb-6 text-xl font-semibold text-slate-900">Liste des clients</h2>
 	<div class="mb-4 flex flex-col gap-2 sm:flex-row">
-		<label class="input input-bordered flex flex-1 items-center gap-2">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-4 w-4 opacity-60"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-			>
-				<circle cx="11" cy="11" r="7" />
-				<line x1="21" y1="21" x2="16.65" y2="16.65" />
-			</svg>
-			<input
-				type="text"
-				class="grow"
-				placeholder="Rechercher un client (nom, téléphone, email)"
-				bind:value={search}
-			/>
-		</label>
+		<SearchClient bind:search />
 		<ToggleCardList bind:view />
 	</div>
 
