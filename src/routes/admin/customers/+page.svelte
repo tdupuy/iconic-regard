@@ -8,20 +8,7 @@
 	<h1 class="mb-12 text-4xl font-bold text-slate-900">Clients</h1>
 	{#if data.bookings.length}
 		<section class="rounded-box border-warning/40 bg-warning/5 mb-12 border-2 p-6">
-			<div class="mb-6 flex items-center gap-2">
-				<h2 class="text-xl font-semibold text-slate-900">Nouveaux clients à valider</h2>
-				<span class="badge badge-warning">{data.bookings.length}</span>
-			</div>
-			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				{#each data.bookings as booking (booking.id)}
-					<NewCustomerCard
-						email={booking.email}
-						phoneNumber={booking.phoneNumber}
-						name={booking.name}
-						reason={booking.reason}
-					/>
-				{/each}
-			</div>
+			<ConflictedClients bookings={data.bookings} />
 		</section>
 	{/if}
 	<section>
