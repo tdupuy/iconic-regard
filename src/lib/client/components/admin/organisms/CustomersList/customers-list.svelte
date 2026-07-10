@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ToggleCardList } from '$lib/client/components/admin/atoms/ToggleCardList/';
-	import { SearchClient } from '$lib/client/components/admin/atoms/SearchClient/';
+	import { SearchCustomer } from '$lib/client/components/admin/atoms/SearchCustomer';
 
 	const clients = [
 		{ id: 1, nom: 'Marion Fabien', telephone: '06 12 34 56 78', email: 'marion.fabien@mail.com' },
@@ -52,7 +52,7 @@
 <section>
 	<h2 class="mb-6 text-xl font-semibold text-slate-900">Liste des clients</h2>
 	<div class="mb-4 flex flex-col gap-2 sm:flex-row">
-		<SearchClient bind:search />
+		<SearchCustomer bind:search />
 		<ToggleCardList bind:view />
 	</div>
 

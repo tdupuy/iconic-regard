@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { ConflictedClients } from '$lib/client/components/admin/organisms/ConflictedClients';
-	import { ClientList } from '$lib/client/components/admin/organisms/ClientList';
+	import { CustomersList } from '$lib/client/components/admin/organisms/CustomersList';
 	//let { data }: { data: PageData } = $props();
 
 	// Données d'exemple — remplace par tes vraies données / props
@@ -15,5 +15,5 @@
 			<ConflictedClients bookings={data.bookings} />
 		</section>
 	{/if}
-	<ClientList />
+	<CustomersList />
 </div>
