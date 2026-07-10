@@ -35,7 +35,15 @@ export const load: PageServerLoad = async () => {
 				}
 			}));
 
-		return { bookings: pendingBookings };
+		const rawCustomers = await db.select().from(customers).where(eq(customers.status, 'active'));
+		const activeCustomers = rawCustomers.map((customer) => ({
+			id: customer.id,
+			name: customer.name,
+			email: customer.email ? decrypt(customer.email) : null,
+			phoneNumber: decrypt(customer.phoneNumber)
+		}));
+
+		return { bookings: pendingBookings, customers: activeCustomers };
 	} catch (err) {
 		throw error(500, err instanceof Error ? err.message : 'Erreur');
 	}

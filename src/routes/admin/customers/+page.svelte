@@ -2,10 +2,10 @@
 	import type { PageData } from './$types';
 	import { ConflictedClients } from '$lib/client/components/admin/organisms/ConflictedClients';
 	import { CustomersList } from '$lib/client/components/admin/organisms/CustomersList';
-	//let { data }: { data: PageData } = $props();
 
 	// Données d'exemple — remplace par tes vraies données / props
 	let { data }: { data: PageData } = $props();
+	console.log('data', data);
 </script>
 
 <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -15,5 +15,5 @@
 			<ConflictedClients bookings={data.bookings} />
 		</section>
 	{/if}
-	<CustomersList />
+	<CustomersList customers={data.customers} />
 </div>

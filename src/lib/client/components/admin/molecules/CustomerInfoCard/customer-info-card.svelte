@@ -1,11 +1,11 @@
 <!-- VUE CARTES -->
 <script lang="ts">
-	let { client, onFidelite, onFiche, onFusionner } = $props();
+	let { customer, onFidelite, onFiche, onFusionner } = $props();
 </script>
 
 <div class="card bg-base-100 rounded-xl border">
 	<div class="card-body gap-2 p-4">
-		<p class="text-[15px] font-medium">{client.nom}</p>
+		<p class="text-[15px] font-medium">{customer.name}</p>
 		<p class="flex items-center gap-1 text-sm opacity-70">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@
 					d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"
 				/>
 			</svg>
-			{client.telephone}
+			{customer.phoneNumber}
 		</p>
 		<p class="flex items-center gap-1 truncate text-sm opacity-70">
 			<svg
@@ -33,13 +33,13 @@
 				<rect x="2" y="4" width="20" height="16" rx="2" />
 				<path d="m22 6-10 7L2 6" />
 			</svg>
-			<span class="truncate">{client.email}</span>
+			<span class="truncate">{customer.email}</span>
 		</p>
 
 		<div class="mt-2 flex gap-2 border-t pt-2">
 			<button
 				class="btn btn-sm btn-outline h-auto flex-1 flex-col gap-1 py-2 text-[11px]"
-				onclick={() => onFidelite(client)}
+				onclick={() => onFidelite(customer)}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@
 			</button>
 			<button
 				class="btn btn-sm btn-outline h-auto flex-1 flex-col gap-1 py-2 text-[11px]"
-				onclick={() => onFiche(client)}
+				onclick={() => onFiche(customer)}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@
 			</button>
 			<button
 				class="btn btn-sm btn-outline h-auto flex-1 flex-col gap-1 py-2 text-[11px]"
-				onclick={() => onFusionner(client)}
+				onclick={() => onFusionner(customer)}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
