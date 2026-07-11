@@ -10,6 +10,7 @@
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 	{#each bookings as booking (booking.id)}
 		<NewCustomerCard
+			customerId={booking.id}
 			email={booking.email}
 			phoneNumber={booking.phoneNumber}
 			name={booking.name}

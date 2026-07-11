@@ -14,12 +14,18 @@
 	};
 
 	let {
+		customerId,
 		email,
 		phoneNumber,
 		name,
 		reason
-	}: { email: string | null | undefined; phoneNumber: string; name: string; reason: Reason } =
-		$props();
+	}: {
+		customerId: string;
+		email: string | null | undefined;
+		phoneNumber: string;
+		name: string;
+		reason: Reason;
+	} = $props();
 	const displayEmail = isPlaceholderEmail(email) ? null : email;
 </script>
 
@@ -87,7 +93,7 @@
 				<button type="submit" class="btn btn-success btn-sm">Ajouter</button>
 			</form>
 			<a
-				href={`/admin/customers/merge?uid1=${reason.matchId}&uid2='123456'`}
+				href={`/admin/customers/merge?uid1=${customerId}&uid2=${reason.matchId}`}
 				class="btn btn-warning btn-sm">Fusionner</a
 			>
 			<button class="btn btn-error btn-sm">Annuler</button>
