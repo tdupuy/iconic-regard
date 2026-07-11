@@ -15,6 +15,12 @@
 		</section>
 	{/if}
 
+	{#if data.mergeSuccess}
+		<section class="rounded-box mb-12 border border-green-200 bg-green-50 p-6 text-green-900">
+			{data.mergeSuccess}
+		</section>
+	{/if}
+
 	{#if data.bookings.length}
 		<section class="rounded-box border-warning/40 bg-warning/5 mb-12 border-2 p-6">
 			<ConflictedClients bookings={data.bookings} />

@@ -4,6 +4,8 @@ import { redirect } from '@sveltejs/kit';
 import { encrypt, decrypt } from '$lib/server/crypto';
 import { eq } from 'drizzle-orm';
 import { customers, pendingCustomers } from '$lib/db/schema';
+import { fail } from '@sveltejs/kit';
+import type { Actions } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const idCustomerMergeFrom = url.searchParams.get('uid1');
@@ -51,4 +53,48 @@ export const load: PageServerLoad = async ({ url }) => {
 		customerMergeFrom: CustomerMergeFrom,
 		customerMergeTo: CustomerMergeTo
 	};
+};
+
+export const actions: Actions = {
+	default: async ({ request }) => {
+		const formData = await request.formData();
+
+		const fromId = formData.get('fromId')?.toString();
+		const toId = formData.get('toId')?.toString();
+		const name = formData.get('name')?.toString() || null;
+		const email = formData.get('email')?.toString() || null;
+		const phoneNumber = formData.get('phoneNumber')?.toString() || null;
+
+		if (!fromId || !toId) {
+			return fail(400, { error: 'Fiches manquantes, impossible de fusionner.' });
+		}
+
+		if (fromId === toId) {
+			return fail(400, { error: 'Les deux fiches sont identiques.' });
+		}
+
+		if (!phoneNumber) {
+			return fail(400, { error: 'Le téléphone est obligatoire.' });
+		}
+
+		console.log('Fusion demandée :', { fromId, toId, name, email, phoneNumber });
+
+		try {
+			await db
+				.update(customers)
+				.set({
+					name: name || undefined,
+					email: email ? encrypt(email) : null,
+					phoneNumber: encrypt(phoneNumber)
+				})
+				.where(eq(customers.id, toId));
+
+			await db.delete(pendingCustomers).where(eq(pendingCustomers.customerId, fromId));
+			await db.update(customers).set({ status: 'cancelled' }).where(eq(customers.id, fromId));
+		} catch (err) {
+			return fail(500, { message: err instanceof Error ? err.message : 'Erreur base de données' });
+		}
+		const message = encodeURIComponent('Fiches fusionnées avec succès.');
+		redirect(303, `/admin/customers?mergeSuccess=${message}`);
+	}
 };

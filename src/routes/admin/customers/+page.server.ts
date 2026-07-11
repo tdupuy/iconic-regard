@@ -46,7 +46,8 @@ export const load: PageServerLoad = async ({ url }) => {
 		return {
 			bookings: pendingBookings,
 			customers: activeCustomers,
-			mergeError: url.searchParams.get('mergeError')
+			mergeError: url.searchParams.get('mergeError'),
+			mergeSuccess: url.searchParams.get('mergeSuccess')
 		};
 	} catch (err) {
 		throw error(500, err instanceof Error ? err.message : 'Erreur');

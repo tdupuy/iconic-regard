@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { enhance } from '$app/forms';
 
 	type FieldKey = 'name' | 'phoneNumber' | 'email';
 
@@ -39,32 +40,22 @@
 		if (isEmpty(source === 'from' ? customerMergeFrom[field] : customerMergeTo[field])) return;
 		selection[field] = source;
 	}
-
-	function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
-
-		const merged = Object.fromEntries(
-			fields.map(({ key }) => [
-				key,
-				selection[key] === 'from' ? customerMergeFrom[key] : customerMergeTo[key]
-			])
-		) as Record<FieldKey, string | null>;
-
-		console.log('Fusion — champs sélectionnés :', selection);
-		console.log('Fusion — données envoyées :', merged);
-
-		// TODO: brancher l'appel réel de fusion ici (form action / fetch vers l'API de merge)
-		// ex: await fetch(`/admin/customers/merge`, { method: 'POST', body: JSON.stringify({ ...merged, fromId: userMergeFrom.id, toId: userMergeTo.id }) })
-	}
 </script>
 
 <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
 	<h1 class="mb-6 text-3xl font-bold text-slate-900">Fusion de clients</h1>
-	<form class="card bg-base-100 w-full rounded-xl border" onsubmit={handleSubmit}>
+	<form class="card bg-base-100 w-full rounded-xl border" method="POST" use:enhance>
+		<input type="hidden" name="fromId" value={customerMergeFrom.id} />
+		<input type="hidden" name="toId" value={customerMergeTo.id} />
 		<div class="card-body gap-3 p-4">
 			<p class="text-[13px] opacity-70">Fusionner 2 fiches</p>
 
 			{#each fields as { key, label } (key)}
+				<input
+					type="hidden"
+					name={key}
+					value={selection[key] === 'from' ? customerMergeFrom[key] : customerMergeTo[key]}
+				/>
 				<div class="flex flex-col gap-1">
 					<span class="flex items-center gap-1 text-[11px] opacity-50">
 						{#if key === 'phoneNumber'}
