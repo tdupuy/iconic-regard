@@ -77,8 +77,6 @@ export const actions: Actions = {
 			return fail(400, { error: 'Le téléphone est obligatoire.' });
 		}
 
-		console.log('Fusion demandée :', { fromId, toId, name, email, phoneNumber });
-
 		try {
 			await db
 				.update(customers)

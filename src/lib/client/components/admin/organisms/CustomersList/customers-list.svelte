@@ -3,16 +3,12 @@
 	import { SearchCustomer } from '$lib/client/components/admin/atoms/SearchCustomer';
 	import { CustomerInfoCard } from '../../molecules/CustomerInfoCard';
 	import { CustomerInfoLine } from '../../molecules/CustomerInfoLine';
+	import { goto } from '$app/navigation';
 
 	let { customers } = $props();
 
 	let view: 'card' | 'list' = $state('card');
 	let search = $state('');
-
-	type Reason = {
-		matchId: string;
-		reasons: ('phone_match' | 'email_match' | 'name_match')[];
-	};
 
 	const reasonLabels: Record<'phone_match' | 'email_match' | 'name_match', string> = {
 		name_match: 'Nom identique',
@@ -38,7 +34,7 @@
 		console.log('fiche', customer);
 	}
 	function onFusionner(customer) {
-		console.log('fusionner', customer);
+		goto(`/admin/customers/merge?uid1=${customer.id}&uid2=${customer.reason?.matchId}`);
 	}
 </script>
 
