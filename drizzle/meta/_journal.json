@@ -29,6 +29,20 @@
       "when": 1775979984025,
       "tag": "0003_foamy_psylocke",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1782846744468,
+      "tag": "0004_nervous_firebrand",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1783021534694,
+      "tag": "0005_add_booking_uid",
+      "breakpoints": true
     }
   ]
 }

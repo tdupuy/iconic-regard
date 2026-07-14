@@ -41,7 +41,7 @@
 			<!-- List item -->
 			<li>
 				<a
-					href="/customers"
+					href="/admin/customers"
 					class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
 					data-tip="Clients"
 				>
