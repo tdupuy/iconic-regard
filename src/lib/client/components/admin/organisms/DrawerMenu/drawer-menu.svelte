@@ -62,6 +62,29 @@
 					<span class="is-drawer-close:hidden text-lg text-white">Clients</span>
 				</a>
 			</li>
+			<!-- List item -->
+			<li>
+				<a
+					href="/admin/services"
+					class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+					data-tip="Prestations"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						stroke-linejoin="round"
+						stroke-linecap="round"
+						stroke-width="2"
+						fill="none"
+						stroke="white"
+						class="my-1.5 inline-block size-6"
+						><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path
+							d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
+						></path><path d="M9 12h6"></path><path d="M9 16h6"></path><path d="M9 8h6"></path></svg
+					>
+					<span class="is-drawer-close:hidden text-lg text-white">Prestations</span>
+				</a>
+			</li>
 			<li class="mt-auto">
 				<button
 					onclick={logout}
