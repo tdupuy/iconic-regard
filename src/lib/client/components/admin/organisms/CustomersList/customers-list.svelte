@@ -43,7 +43,6 @@
 </script>
 
 <section>
-	<h2 class="mb-6 text-xl font-semibold text-slate-900">Liste des clients</h2>
 	<div class="mb-4 flex flex-col gap-2 sm:flex-row">
 		<SearchCustomer bind:search />
 		<ToggleCardList bind:view />
