@@ -9,6 +9,17 @@
 	let view: 'card' | 'list' = $state('card');
 	let search = $state('');
 
+	type Reason = {
+		matchId: string;
+		reasons: ('phone_match' | 'email_match' | 'name_match')[];
+	};
+
+	const reasonLabels: Record<'phone_match' | 'email_match' | 'name_match', string> = {
+		name_match: 'Nom identique',
+		email_match: 'Email identique',
+		phone_match: 'Téléphone identique'
+	};
+
 	let filtered = $derived(
 		customers.filter((c) => {
 			const q = search.toLowerCase().trim();
@@ -44,14 +55,26 @@
 		<!-- VUE CARTES -->
 		<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 			{#each filtered as customer (customer.id)}
-				<CustomerInfoCard {customer} {onFidelite} {onFiche} {onFusionner} />
+				<CustomerInfoCard
+					{customer}
+					{onFidelite}
+					{onFiche}
+					{onFusionner}
+					reasonLabel={customer.reason?.reasons.map((r) => reasonLabels[r]).join(', ')}
+				/>
 			{/each}
 		</div>
 	{:else}
 		<!-- VUE LISTE -->
 		<div class="divide-base-200 flex flex-col divide-y border-t border-b sm:rounded-xl sm:border">
 			{#each filtered as customer (customer.id)}
-				<CustomerInfoLine {customer} {onFidelite} {onFiche} {onFusionner} />
+				<CustomerInfoLine
+					{customer}
+					{onFidelite}
+					{onFiche}
+					{onFusionner}
+					reasonLabel={customer.reason?.reasons.map((r) => reasonLabels[r]).join(', ')}
+				/>
 			{/each}
 		</div>
 	{/if}

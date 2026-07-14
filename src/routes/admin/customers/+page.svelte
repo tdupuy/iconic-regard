@@ -26,5 +26,5 @@
 			<ConflictedClients bookings={data.bookings} />
 		</section>
 	{/if}
-	<CustomersList customers={data.customers} />
+	<CustomersList customers={data.customersList} />
 </div>

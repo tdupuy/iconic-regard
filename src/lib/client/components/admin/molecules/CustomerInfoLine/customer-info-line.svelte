@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { customer, onFidelite, onFiche, onFusionner } = $props();
+	let { customer, onFidelite, onFiche, onFusionner, reasonLabel } = $props();
 
 	function initiales(name: string) {
 		return name
@@ -11,17 +11,30 @@
 	}
 </script>
 
-<div class="flex items-center gap-3 px-1 py-2.5 sm:px-3">
-	<div
-		class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-xs font-medium"
-	>
-		{initiales(customer.name)}
+<div
+	class="flex flex-col gap-3 px-1 py-2.5 sm:flex-row sm:items-center sm:px-3 {reasonLabel
+		? 'border-warning bg-warning/10 border-l-4'
+		: ''}"
+>
+	<div class="flex min-w-0 items-center gap-3">
+		<div
+			class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-xs font-medium"
+		>
+			{initiales(customer.name)}
+		</div>
+		<div class="min-w-0 flex-1">
+			<p class="truncate text-sm font-medium">{customer.name}</p>
+			<p class="truncate text-xs opacity-60">{customer.phoneNumber} · {customer.email}</p>
+			{#if reasonLabel}
+				<p
+					class="badge badge-warning badge-sm mt-1 h-auto max-w-full py-1 text-left whitespace-normal"
+				>
+					{reasonLabel}
+				</p>
+			{/if}
+		</div>
 	</div>
-	<div class="min-w-0 flex-1">
-		<p class="truncate text-sm font-medium">{customer.name}</p>
-		<p class="truncate text-xs opacity-60">{customer.phoneNumber} · {customer.email}</p>
-	</div>
-	<div class="flex shrink-0 gap-1">
+	<div class="flex shrink-0 gap-1 sm:ml-auto">
 		<button
 			class="btn btn-xs btn-outline btn-square"
 			aria-label="Fidélité"

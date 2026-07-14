@@ -1,11 +1,16 @@
 <!-- VUE CARTES -->
 <script lang="ts">
-	let { customer, onFidelite, onFiche, onFusionner } = $props();
+	let { customer, onFidelite, onFiche, onFusionner, reasonLabel } = $props();
 </script>
 
-<div class="card bg-base-100 rounded-xl border">
+<div class="card rounded-xl border {reasonLabel ? 'border-warning bg-warning/10' : 'bg-base-100'}">
 	<div class="card-body gap-2 p-4">
 		<p class="text-[15px] font-medium">{customer.name}</p>
+
+		{#if reasonLabel}
+			<p class="badge badge-warning badge-sm w-fit">{reasonLabel}</p>
+		{/if}
+
 		<p class="flex items-center gap-1 text-sm opacity-70">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
