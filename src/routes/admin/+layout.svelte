@@ -1,7 +1,15 @@
 <script lang="ts">
 	import '../../lib/client/styles/app.css';
 	import { DrawerMenu } from '../../lib/client/components/admin/organisms/DrawerMenu';
+	import { afterNavigate } from '$app/navigation';
+
 	let { children } = $props();
+
+	let drawerOpen = $state(false);
+
+	afterNavigate(() => {
+		drawerOpen = false;
+	});
 </script>
 
 <svelte:head>
@@ -11,7 +19,7 @@
 
 <app data-theme="violet-perso"
 	><div class="drawer lg:drawer-open">
-		<input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+		<input id="my-drawer-4" type="checkbox" class="drawer-toggle" bind:checked={drawerOpen} />
 		<div class="drawer-content">
 			<!-- Navbar -->
 			<nav class="navbar w-full bg-black text-white">
