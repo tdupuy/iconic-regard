@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { X } from 'lucide-svelte';
+	import { X } from '@lucide/svelte';
 	let { onClose }: { onClose: () => void } = $props();
 </script>
 
