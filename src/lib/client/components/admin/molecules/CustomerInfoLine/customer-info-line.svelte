@@ -15,6 +15,15 @@
 	class="flex flex-col gap-3 px-1 py-2.5 sm:flex-row sm:items-center sm:px-3 {reasonLabel
 		? 'border-warning bg-warning/10 border-l-4'
 		: ''}"
+	role="button"
+	tabindex="0"
+	onclick={() => onFiche(customer)}
+	onkeydown={(e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			onFiche(customer);
+		}
+	}}
 >
 	<div class="flex min-w-0 items-center gap-3">
 		<div
@@ -39,7 +48,10 @@
 			<button
 				class="btn btn-sm btn-outline flex h-auto flex-row gap-1 py-1 text-[11px]"
 				aria-label="Fidélité"
-				onclick={() => onFidelite(customer)}
+				onclick={(e) => {
+					e.stopPropagation();
+					onFidelite(customer);
+				}}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +70,10 @@
 			<button
 				class="btn btn-sm btn-outline flex h-auto flex-row gap-1 py-1 text-[11px]"
 				aria-label="Fiche client"
-				onclick={() => onFiche(customer)}
+				onclick={(e) => {
+					e.stopPropagation();
+					onFiche(customer);
+				}}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +91,10 @@
 		{:else}
 			<button
 				class="btn btn-sm btn-outline flex h-auto flex-row gap-1 py-1 text-[11px]"
-				onclick={() => onFusionner(customer)}
+				onclick={(e) => {
+					e.stopPropagation();
+					onFusionner(customer);
+				}}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
