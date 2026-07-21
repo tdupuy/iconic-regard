@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { PageTitle } from '$lib/client/components/atoms/PageTitle';
-	import { Phone, AtSign, MapPinHouse } from 'lucide-svelte';
+	import { Phone, AtSign, MapPinHouse } from '@lucide/svelte';
 	import { SiInstagram, SiFacebook } from '@icons-pack/svelte-simple-icons';
 	let { data } = $props();
 </script>

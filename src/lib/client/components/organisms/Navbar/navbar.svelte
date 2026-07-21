@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Menu } from 'lucide-svelte';
+	import { Menu } from '@lucide/svelte';
 	import PopOverMenu from '$lib/client/components/molecules/PopOverMenu/';
 	let menuOpen = $state(false);
 </script>

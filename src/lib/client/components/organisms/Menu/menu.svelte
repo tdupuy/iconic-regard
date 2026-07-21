@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Calendar, MessageCircle, Image, ClipboardList } from 'lucide-svelte';
+	import { Calendar, MessageCircle, Image, ClipboardList } from '@lucide/svelte';
 	import Tile from '../../molecules/Tile';
 </script>
 

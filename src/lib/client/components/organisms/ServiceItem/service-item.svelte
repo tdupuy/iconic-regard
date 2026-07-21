@@ -2,7 +2,7 @@
 	import { slide } from 'svelte/transition';
 	import Cal from '$lib/client/components/organisms/Cal';
 	import { PUBLIC_CAL_LINK } from '$env/static/public';
-	import { Heart } from 'lucide-svelte';
+	import { Heart } from '@lucide/svelte';
 
 	let {
 		namespace,
