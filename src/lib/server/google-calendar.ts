@@ -91,3 +91,26 @@ export async function getCalendarEvents(opts: {
 
 	return response.items;
 }
+
+export async function createCalendarEvent(opts: {
+	calendarId: string;
+	summary: string;
+	description?: string;
+	start: string; // ISO 8601
+	end: string; // ISO 8601
+}): Promise<GoogleCalendarEvent> {
+	const { calendarId, summary, description, start, end } = opts;
+
+	return calendarRequest<GoogleCalendarEvent>(
+		`/calendars/${encodeURIComponent(calendarId)}/events`,
+		{
+			method: 'POST',
+			body: JSON.stringify({
+				summary,
+				description,
+				start: { dateTime: start },
+				end: { dateTime: end }
+			})
+		}
+	);
+}
