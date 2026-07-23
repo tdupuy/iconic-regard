@@ -48,11 +48,6 @@
 		return start ? start.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
 	}
 
-	function clientName(event: GoogleCalendarEvent): string {
-		const attendee = event.attendees?.[0];
-		return attendee?.displayName ?? attendee?.email ?? 'Client';
-	}
-
 	function serviceLabel(event: GoogleCalendarEvent): string {
 		return event.summary ?? 'Sans titre';
 	}
@@ -160,7 +155,6 @@
 								onclick={() => openEvent(event)}
 							>
 								<p class="text-sm font-medium">{formatTime(event)}</p>
-								<p class="truncate text-base font-medium">{clientName(event)}</p>
 								<p class="text-base-content/60 truncate text-sm">{serviceLabel(event)}</p>
 							</button>
 						{/each}
@@ -190,7 +184,6 @@
 								onclick={() => openEvent(event)}
 							>
 								<div>
-									<p class="text-base font-medium">{clientName(event)}</p>
 									<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
 								</div>
 								<p class="ml-2 shrink-0 text-base font-medium">{formatTime(event)}</p>
