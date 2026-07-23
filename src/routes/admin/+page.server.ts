@@ -1,5 +1,9 @@
 import type { PageServerLoad } from './$types';
-import { getBookings } from '$lib/server/cal';
+import { getCalendarEvents } from '$lib/server/google-calendar';
+
+const CALENDAR_ID = 'primary';
+// Calendrier partagé, à réutiliser plus tard si besoin :
+// const SHARED_CALENDAR_ID = 'espaceparta.gee@gmail.com';
 
 // Parse "YYYY-MM-DD" comme date locale, pas UTC (évite le décalage de fuseau horaire)
 function parseLocalDate(dateStr: string): Date {
@@ -25,15 +29,14 @@ export const load: PageServerLoad = async ({ url }) => {
 	const weekEnd = new Date(weekStart);
 	weekEnd.setDate(weekEnd.getDate() + 6);
 
-	const bookings = await getBookings({
-		status: 'upcoming',
-		afterStart: weekStart.toISOString(),
-		beforeEnd: weekEnd.toISOString(),
-		take: 100
+	const events = await getCalendarEvents({
+		calendarId: CALENDAR_ID,
+		timeMin: weekStart.toISOString(),
+		timeMax: weekEnd.toISOString()
 	});
 
 	return {
 		weekStart: weekStart.toISOString(),
-		bookings
+		events
 	};
 };

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { navigating } from '$app/state';
-	import type { CalBooking } from '$lib/server/cal';
+	import type { GoogleCalendarEvent } from '$lib/server/google-calendar';
 
 	type Props = {
 		data: {
 			weekStart: string;
-			bookings: CalBooking[];
+			events: GoogleCalendarEvent[];
 		};
 	};
 
@@ -27,24 +27,38 @@
 		return a.toDateString() === b.toDateString();
 	}
 
-	const bookingsByDay = $derived(
+	// Ignore les événements "jour entier" (pas de dateTime, juste une date) pour l'instant
+	function eventStart(event: GoogleCalendarEvent): Date | null {
+		return event.start.dateTime ? new Date(event.start.dateTime) : null;
+	}
+
+	const eventsByDay = $derived(
 		days.map((day) =>
-			data.bookings
-				.filter((b) => isSameDay(new Date(b.start), day))
-				.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())
+			data.events
+				.filter((e) => {
+					const start = eventStart(e);
+					return start && isSameDay(start, day);
+				})
+				.sort((a, b) => eventStart(a)!.getTime() - eventStart(b)!.getTime())
 		)
 	);
 
-	function formatTime(iso: string): string {
-		return new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+	function formatTime(event: GoogleCalendarEvent): string {
+		const start = eventStart(event);
+		return start ? start.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
 	}
 
-	function clientName(booking: CalBooking): string {
-		return booking.attendees[0]?.name ?? 'Client';
+	function clientName(event: GoogleCalendarEvent): string {
+		const attendee = event.attendees?.[0];
+		return attendee?.displayName ?? attendee?.email ?? 'Client';
 	}
 
-	function openBooking(booking: CalBooking) {
-		goto(`/planning/${booking.uid}`);
+	function serviceLabel(event: GoogleCalendarEvent): string {
+		return event.summary ?? 'Sans titre';
+	}
+
+	function openEvent(event: GoogleCalendarEvent) {
+		goto(`/planning/${event.id}`);
 	}
 
 	function toDateParam(date: Date): string {
@@ -62,7 +76,7 @@
 		goto(`?${params.toString()}`);
 	}
 
-	// Chargement en cours = navigation SvelteKit active (le load function refetch Cal.com)
+	// Chargement en cours = navigation SvelteKit active (le load function refetch Google Calendar)
 	const isLoading = $derived(Boolean(navigating.to));
 
 	const today = new Date();
@@ -137,17 +151,17 @@
 					<p class="text-base font-medium">{day.getDate()}</p>
 				</div>
 				<div class="mt-2 flex flex-col gap-2 px-1">
-					{#if bookingsByDay[i].length === 0}
+					{#if eventsByDay[i].length === 0}
 						<p class="text-base-content/40 my-2 text-center text-sm">Aucun RDV</p>
 					{:else}
-						{#each bookingsByDay[i] as booking (booking.uid)}
+						{#each eventsByDay[i] as event (event.id)}
 							<button
 								class="bg-primary/10 hover:bg-primary/20 cursor-pointer rounded-lg p-3 text-left transition-colors"
-								onclick={() => openBooking(booking)}
+								onclick={() => openEvent(event)}
 							>
-								<p class="text-sm font-medium">{formatTime(booking.start)}</p>
-								<p class="truncate text-base font-medium">{clientName(booking)}</p>
-								<p class="text-base-content/60 truncate text-sm">{booking.title}</p>
+								<p class="text-sm font-medium">{formatTime(event)}</p>
+								<p class="truncate text-base font-medium">{clientName(event)}</p>
+								<p class="text-base-content/60 truncate text-sm">{serviceLabel(event)}</p>
 							</button>
 						{/each}
 					{/if}
@@ -166,20 +180,20 @@
 					{day.getDate()}
 					{day.toLocaleDateString('fr-FR', { month: 'short' })}
 				</p>
-				{#if bookingsByDay[i].length === 0}
+				{#if eventsByDay[i].length === 0}
 					<p class="text-base-content/40 pl-1 text-sm">Aucun RDV</p>
 				{:else}
 					<div class="flex flex-col gap-2">
-						{#each bookingsByDay[i] as booking (booking.uid)}
+						{#each eventsByDay[i] as event (event.id)}
 							<button
 								class="bg-primary/10 flex items-center justify-between rounded-lg p-3 text-left"
-								onclick={() => openBooking(booking)}
+								onclick={() => openEvent(event)}
 							>
 								<div>
-									<p class="text-base font-medium">{clientName(booking)}</p>
-									<p class="text-base-content/60 text-sm">{booking.title}</p>
+									<p class="text-base font-medium">{clientName(event)}</p>
+									<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
 								</div>
-								<p class="ml-2 shrink-0 text-base font-medium">{formatTime(booking.start)}</p>
+								<p class="ml-2 shrink-0 text-base font-medium">{formatTime(event)}</p>
 							</button>
 						{/each}
 					</div>
