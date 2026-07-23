@@ -4,6 +4,7 @@ import { db } from '$lib/db';
 import { eq } from 'drizzle-orm';
 import { customers, pendingCustomers } from '$lib/db/schema';
 import { error, fail } from '@sveltejs/kit';
+import { syncCustomersFromBookings } from '$lib/server/syncBookingUsers';
 
 export const load: PageServerLoad = async ({ url }) => {
 	try {
@@ -75,6 +76,15 @@ export const actions: Actions = {
 			});
 		} catch (err) {
 			return fail(500, { message: err instanceof Error ? err.message : 'Erreur base de données' });
+		}
+	},
+	syncCustomers: async () => {
+		try {
+			const results = await syncCustomersFromBookings();
+			return { syncSuccess: `Synchronisation terminée : ${JSON.stringify(results)}` };
+		} catch (err) {
+			console.error(err);
+			return fail(500, { syncError: 'Erreur lors de la synchronisation.' });
 		}
 	}
 };

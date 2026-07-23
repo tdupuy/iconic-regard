@@ -2,7 +2,7 @@
 	import ServiceItem from '$lib/client/components/organisms/ServiceItem';
 	import { PageTitle } from '$lib/client/components/atoms/PageTitle';
 	import { CategoryServicesSelect } from '$lib/client/components/molecules/CategoryServicesSelect';
-	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
+	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 
 	const { data } = $props();
 	let selectedCategory = $state(0);

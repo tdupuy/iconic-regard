@@ -31,7 +31,7 @@
 		console.log('fidelite', customer);
 	}
 	function onFiche(customer) {
-		console.log('fiche', customer);
+		goto(`/admin/customers/edit/${customer.id}`);
 	}
 	function onFusionner(customer) {
 		goto(`/admin/customers/merge?uid1=${customer.id}&uid2=${customer.reason?.matchId}`);
