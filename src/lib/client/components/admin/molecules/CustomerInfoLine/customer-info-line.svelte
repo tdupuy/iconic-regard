@@ -15,6 +15,15 @@
 	class="flex flex-col gap-3 px-1 py-2.5 sm:flex-row sm:items-center sm:px-3 {reasonLabel
 		? 'border-warning bg-warning/10 border-l-4'
 		: ''}"
+	role="button"
+	tabindex="0"
+	onclick={() => onFiche(customer)}
+	onkeydown={(e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			onFiche(customer);
+		}
+	}}
 >
 	<div class="flex min-w-0 items-center gap-3">
 		<div
@@ -37,9 +46,12 @@
 	<div class="flex shrink-0 gap-1 sm:ml-auto">
 		{#if !reasonLabel}
 			<button
-				class="btn btn-xs btn-outline btn-square"
+				class="btn btn-sm btn-outline flex h-auto flex-row gap-1 py-1 text-[11px]"
 				aria-label="Fidélité"
-				onclick={() => onFidelite(customer)}
+				onclick={(e) => {
+					e.stopPropagation();
+					onFidelite(customer);
+				}}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -53,11 +65,15 @@
 						points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
 					/>
 				</svg>
+				Fidélité
 			</button>
 			<button
-				class="btn btn-xs btn-outline btn-square"
+				class="btn btn-sm btn-outline flex h-auto flex-row gap-1 py-1 text-[11px]"
 				aria-label="Fiche client"
-				onclick={() => onFiche(customer)}
+				onclick={(e) => {
+					e.stopPropagation();
+					onFiche(customer);
+				}}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -70,12 +86,15 @@
 					<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
 					<rect x="8" y="2" width="8" height="4" rx="1" />
 				</svg>
+				Fiche
 			</button>
 		{:else}
 			<button
-				class="btn btn-xs btn-outline btn-square"
-				aria-label="Fusionner"
-				onclick={() => onFusionner(customer)}
+				class="btn btn-sm btn-outline flex h-auto flex-row gap-1 py-1 text-[11px]"
+				onclick={(e) => {
+					e.stopPropagation();
+					onFusionner(customer);
+				}}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -90,6 +109,7 @@
 					<circle cx="18" cy="18" r="3" />
 					<path d="M6 9v6M6 15c0-4 4-6 8-6h4" />
 				</svg>
+				Fusionner
 			</button>
 		{/if}
 	</div>

@@ -3,7 +3,20 @@
 	let { customer, onFidelite, onFiche, onFusionner, reasonLabel } = $props();
 </script>
 
-<div class="card rounded-xl border {reasonLabel ? 'border-warning bg-warning/10' : 'bg-base-100'}">
+<div
+	class="card cursor-pointer rounded-xl border {reasonLabel
+		? 'border-warning bg-warning/10'
+		: 'bg-base-100'}"
+	role="button"
+	tabindex="0"
+	onclick={() => onFiche(customer)}
+	onkeydown={(e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			onFiche(customer);
+		}
+	}}
+>
 	<div class="card-body gap-2 p-4">
 		<p class="text-[15px] font-medium">{customer.name}</p>
 
@@ -45,7 +58,10 @@
 			{#if !reasonLabel}
 				<button
 					class="btn btn-sm btn-outline h-auto flex-1 flex-col gap-1 py-2 text-[11px]"
-					onclick={() => onFidelite(customer)}
+					onclick={(e) => {
+						e.stopPropagation();
+						onFidelite(customer);
+					}}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +79,10 @@
 				</button>
 				<button
 					class="btn btn-sm btn-outline h-auto flex-1 flex-col gap-1 py-2 text-[11px]"
-					onclick={() => onFiche(customer)}
+					onclick={(e) => {
+						e.stopPropagation();
+						onFiche(customer);
+					}}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +100,10 @@
 			{:else}
 				<button
 					class="btn btn-sm btn-outline h-auto flex-1 flex-col gap-1 py-2 text-[11px]"
-					onclick={() => onFusionner(customer)}
+					onclick={(e) => {
+						e.stopPropagation();
+						onFusionner(customer);
+					}}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

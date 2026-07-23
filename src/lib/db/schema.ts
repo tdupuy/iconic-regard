@@ -50,3 +50,13 @@ export const pendingCustomers = pgTable('pending_customers', {
 	reasons: varchar('reasons', { length: 50 }).array().notNull(), // ex: ['phone_match', 'name_match']
 	createdAt: timestamp('created_at').defaultNow().notNull()
 });
+
+export const customerNotes = pgTable('customer_notes', {
+	id: serial('id').primaryKey(),
+	customerId: uuid('customer_id')
+		.notNull()
+		.references(() => customers.id, { onDelete: 'cascade' }),
+	note: text('note').notNull(),
+	createdAt: timestamp('created_at').defaultNow().notNull(),
+	updatedAt: timestamp('updated_at').defaultNow().notNull()
+});
