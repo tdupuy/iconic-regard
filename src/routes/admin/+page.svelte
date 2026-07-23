@@ -32,6 +32,10 @@
 		return event.start.dateTime ? new Date(event.start.dateTime) : null;
 	}
 
+	function eventEnd(event: GoogleCalendarEvent): Date | null {
+		return event.end.dateTime ? new Date(event.end.dateTime) : null;
+	}
+
 	const eventsByDay = $derived(
 		days.map((day) =>
 			data.events
@@ -43,9 +47,14 @@
 		)
 	);
 
-	function formatTime(event: GoogleCalendarEvent): string {
+	function formatTimeRange(event: GoogleCalendarEvent): string {
 		const start = eventStart(event);
-		return start ? start.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
+		const end = eventEnd(event);
+		if (!start) return '';
+		const startStr = start.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+		if (!end) return startStr;
+		const endStr = end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+		return `${startStr} - ${endStr}`;
 	}
 
 	function serviceLabel(event: GoogleCalendarEvent): string {
@@ -154,7 +163,7 @@
 								class="bg-primary/10 hover:bg-primary/20 cursor-pointer rounded-lg p-3 text-left transition-colors"
 								onclick={() => openEvent(event)}
 							>
-								<p class="text-sm font-medium">{formatTime(event)}</p>
+								<p class="text-sm font-medium">{formatTimeRange(event)}</p>
 								<p class="text-base-content/60 truncate text-sm">{serviceLabel(event)}</p>
 							</button>
 						{/each}
@@ -186,7 +195,7 @@
 								<div>
 									<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
 								</div>
-								<p class="ml-2 shrink-0 text-base font-medium">{formatTime(event)}</p>
+								<p class="ml-2 shrink-0 text-base font-medium">{formatTimeRange(event)}</p>
 							</button>
 						{/each}
 					</div>
