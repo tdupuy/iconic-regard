@@ -49,13 +49,21 @@ async function calRequest<T>(path: string, options: RequestInit = {}): Promise<T
 type BookingStatus = 'upcoming' | 'past' | 'cancelled' | 'unconfirmed' | 'recurring';
 
 export async function getBookings(
-	opts: { status?: BookingStatus; take?: number; cursor?: string } = {}
+	opts: {
+		status?: BookingStatus;
+		take?: number;
+		cursor?: string;
+		afterStart?: string; // ISO 8601
+		beforeEnd?: string; // ISO 8601
+	} = {}
 ): Promise<CalBooking[]> {
-	const { status, take = 50, cursor } = opts;
+	const { status, take = 50, cursor, afterStart, beforeEnd } = opts;
 	const params = new URLSearchParams();
 	if (status) params.set('status', status);
 	if (take) params.set('take', String(take));
 	if (cursor) params.set('cursor', cursor);
+	if (afterStart) params.set('afterStart', afterStart);
+	if (beforeEnd) params.set('beforeEnd', beforeEnd);
 
 	return calRequest<CalBooking[]>(`/bookings?${params.toString()}`);
 }
