@@ -1,9 +1,15 @@
 import type { PageServerLoad } from './$types';
 import { getBookings } from '$lib/server/cal';
 
+// Parse "YYYY-MM-DD" comme date locale, pas UTC (évite le décalage de fuseau horaire)
+function parseLocalDate(dateStr: string): Date {
+	const [y, m, d] = dateStr.split('-').map(Number);
+	return new Date(y, m - 1, d);
+}
+
 // Lundi de la semaine contenant `dateParam` (ou aujourd'hui si absent)
 function getWeekStart(dateParam: string | null): Date {
-	const base = dateParam ? new Date(dateParam) : new Date();
+	const base = dateParam ? parseLocalDate(dateParam) : new Date();
 	const day = base.getDay(); // 0 = dimanche, 1 = lundi, ...
 	const diffToMonday = day === 0 ? -6 : 1 - day;
 	const monday = new Date(base);
