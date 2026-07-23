@@ -33,7 +33,7 @@
 		class="mb-6"
 	>
 		<button type="submit" class="btn btn-primary" disabled={syncing}>
-			{syncing ? 'Synchronisation …' : 'Synchroniser les clients'}
+			{syncing ? 'Synchronisation…' : 'Synchroniser les clients'}
 		</button>
 	</form>
 	<CustomersList customers={data.customersList} />
