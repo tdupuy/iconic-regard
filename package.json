@@ -57,6 +57,7 @@
 	},
 	"dependencies": {
 		"@icons-pack/svelte-simple-icons": "^6.5.0",
-		"@lucide/svelte": "^1.25.0"
+		"@lucide/svelte": "^1.25.0",
+		"googleapis": "^173.0.0"
 	}
 }
