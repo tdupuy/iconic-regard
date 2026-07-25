@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"vercel-build": "vite build && npm run db:migrate",
+		"vercel-build": "vite build && if [ \"$VERCEL_ENV\" = \"production\" ]; then npm run db:migrate; else npm run db:push; fi",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
