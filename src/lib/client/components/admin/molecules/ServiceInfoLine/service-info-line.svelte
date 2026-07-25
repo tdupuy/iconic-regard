@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { SvelteSet } from 'svelte/reactivity';
 	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
 
 	let { service } = $props();
 
 	let imgFailed = $state(false);
 	let openDetails = $state(new Set<number>());
+	let active = $state(service.active);
 
 	function initiales(name: string) {
 		return name
@@ -32,7 +34,9 @@
 </script>
 
 <div
-	class="divide-base-200 flex flex-col divide-y border-t border-b hover:cursor-pointer sm:rounded-xl sm:border"
+	class="divide-base-200 flex flex-col divide-y border-t border-b hover:cursor-pointer sm:rounded-xl sm:border {!active
+		? 'opacity-50'
+		: ''}"
 	role="button"
 	tabindex="0"
 	onclick={() => {
@@ -45,6 +49,27 @@
 	}}
 >
 	<div class="flex items-center gap-3 px-1 py-2.5 sm:px-3">
+		<form
+			method="POST"
+			action="?/toggleActive&id={service.id}"
+			use:enhance={() => {
+				const previous = active;
+				active = !active;
+
+				return async ({ result }) => {
+					if (result.type !== 'success') active = previous;
+				};
+			}}
+		>
+			<input
+				type="checkbox"
+				class="toggle toggle-success"
+				checked={active}
+				aria-label="Activer/désactiver"
+				onclick={(e) => e.stopPropagation()}
+				onchange={(e) => e.currentTarget.form?.requestSubmit()}
+			/>
+		</form>
 		{#if !imgFailed}
 			<img
 				src="/assets/{service.imgName}"
@@ -60,7 +85,12 @@
 			</div>
 		{/if}
 		<div class="min-w-0 flex-1">
-			<p class="truncate text-sm font-medium lg:text-xl">{service.name}</p>
+			<p class="truncate text-sm font-medium lg:text-xl">
+				{service.name}
+				{#if !active}
+					<span class="badge badge-ghost badge-sm align-middle">Inactif</span>
+				{/if}
+			</p>
 			<p class="truncate text-xs lg:text-sm">
 				Durée : {service.duration} min
 			</p>
