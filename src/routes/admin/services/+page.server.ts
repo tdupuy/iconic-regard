@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
-import { eq } from 'drizzle-orm';
+import { eq, asc } from 'drizzle-orm';
 import { error, fail } from '@sveltejs/kit';
 import { services, categories } from '$lib/db/schema';
 
@@ -20,7 +20,8 @@ export const load: PageServerLoad = async () => {
 				category: categories.name
 			})
 			.from(services)
-			.innerJoin(categories, eq(services.category, categories.id));
+			.innerJoin(categories, eq(services.category, categories.id))
+			.orderBy(asc(services.order));
 		return { services: rows };
 	} catch (err) {
 		throw error(500, err instanceof Error ? err.message : 'Erreur');
