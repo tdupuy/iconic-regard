@@ -19,7 +19,9 @@ export const services = pgTable('services', {
 	slug: varchar('slug', { length: 100 }).notNull().unique(),
 	duration: integer('duration').notNull(),
 	price: varchar('price', { length: 50 }).notNull(),
-	imgName: varchar('img_name', { length: 255 })
+	imgName: varchar('img_name', { length: 255 }),
+	order: integer('order').notNull().default(0),
+	active: integer('active').notNull().default(1)
 });
 
 export const categories = pgTable('categories', {
