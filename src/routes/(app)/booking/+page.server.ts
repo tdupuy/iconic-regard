@@ -1,6 +1,6 @@
 import { db } from '$lib/db';
 import { categories, services } from '$lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, asc } from 'drizzle-orm';
 
 export const load = async () => {
 	const allServices = await db
@@ -19,7 +19,9 @@ export const load = async () => {
 			}
 		})
 		.from(services)
-		.innerJoin(categories, eq(services.category, categories.id));
+		.innerJoin(categories, eq(services.category, categories.id))
+		.where(eq(services.active, 1))
+		.orderBy(asc(services.order));
 	const allCategories = await db.select().from(categories);
 
 	return {
