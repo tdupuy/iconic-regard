@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { enhance, applyAction } from '$app/forms';
 	import { formatDateTime } from '$lib/utils';
 	import { PenLine, Phone, Mail, UserPlus, UserPen } from '@lucide/svelte';
 	import {
@@ -91,9 +91,15 @@
 			message = null;
 			return async ({ result, update }) => {
 				submitting = false;
+
+				if (result.type === 'redirect') {
+					await applyAction(result);
+					return;
+				}
+
 				if (result.type === 'success') {
 					message = customer ? 'Client mis à jour avec succès.' : 'Client créé avec succès.';
-					await update();
+					await update({ reset: false });
 				} else if (result.type === 'failure' && result.data) {
 					message =
 						typeof result.data.message === 'string'
