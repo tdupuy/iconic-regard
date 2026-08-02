@@ -10,4 +10,5 @@
 	action="?/updateCustomer"
 	title="Édition de client"
 	description="Modifiez les informations du client ci-dessous."
+	type="update"
 />

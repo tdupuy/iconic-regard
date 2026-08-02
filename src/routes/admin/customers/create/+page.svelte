@@ -7,4 +7,5 @@
 	title="Nouveau client"
 	description="Renseignez les informations du nouveau client."
 	submitLabel="Créer"
+	type="create"
 />

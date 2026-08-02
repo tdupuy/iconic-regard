@@ -1,7 +1,7 @@
 import { error, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { decrypt } from '$lib/server/crypto';
-import { upsertCustomer } from '$lib/server/customer';
+import { upsertCustomer, softDeleteCustomer } from '$lib/server/customer';
 import { db } from '$lib/db';
 import { customers } from '$lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -48,6 +48,24 @@ export const actions: Actions = {
 		} catch (err) {
 			return fail(500, { message: err instanceof Error ? err.message : 'Erreur de mise à jour' });
 		}
+		return { success: true };
+	},
+	softDeleteCustomer: async ({ request }) => {
+		const formData = await request.formData();
+		const id = formData.get('id');
+
+		if (typeof id !== 'string') {
+			return fail(400, { message: 'ID invalide.' });
+		}
+
+		try {
+			await softDeleteCustomer(id);
+		} catch (err) {
+			return fail(500, {
+				message: err instanceof Error ? err.message : 'Une erreur est survenue.'
+			});
+		}
+
 		return { success: true };
 	}
 };

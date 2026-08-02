@@ -70,3 +70,7 @@ export async function upsertCustomer(data: UpsertCustomer) {
 
 	return customer;
 }
+
+export async function softDeleteCustomer(id: string) {
+	await db.update(customers).set({ status: 'cancelled' }).where(eq(customers.id, id));
+}

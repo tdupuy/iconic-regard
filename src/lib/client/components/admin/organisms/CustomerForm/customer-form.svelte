@@ -6,6 +6,7 @@
 		TypicalFormField,
 		ReadonlyFormField
 	} from '$lib/client/components/admin/atoms/FormFields';
+	import { CancelCustomerForm } from '$lib/client/components/admin/organisms/CancelCustomerForm';
 
 	type Customer = {
 		id: string;
@@ -21,13 +22,15 @@
 		action,
 		title,
 		description,
-		submitLabel = 'Enregistrer'
+		submitLabel = 'Enregistrer',
+		type
 	}: {
 		customer?: Customer | null;
 		action: string;
 		title: string;
 		description: string;
 		submitLabel?: string;
+		type: 'create' | 'update';
 	} = $props();
 
 	let form = $state({
@@ -158,4 +161,9 @@
 			</button>
 		</div>
 	</form>
+	{#if type === 'update' && customer}
+		<div class="mt-3">
+			<CancelCustomerForm customerId={customer.id} onCancelled={(msg) => (message = msg)} />
+		</div>
+	{/if}
 </div>
