@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import { CustomersList } from '$lib/client/components/admin/organisms/CustomersList';
 	import { enhance } from '$app/forms';
+	import { RefreshCw, UserPlus } from '@lucide/svelte';
 
 	let { data }: { data: PageData } = $props();
 	let syncing = $state(false);
@@ -20,21 +21,28 @@
 			{data.mergeSuccess}
 		</section>
 	{/if}
-	<form
-		method="POST"
-		action="?/syncCustomers"
-		use:enhance={() => {
-			syncing = true;
-			return async ({ update }) => {
-				await update();
-				syncing = false;
-			};
-		}}
-		class="mb-6"
-	>
-		<button type="submit" class="btn btn-primary" disabled={syncing}>
-			{syncing ? 'Synchronisation…' : 'Synchroniser les clients'}
-		</button>
-	</form>
+	<div class="mb-6 flex flex-col md:flex-row lg:gap-3">
+		<form
+			method="POST"
+			action="?/syncCustomers"
+			use:enhance={() => {
+				syncing = true;
+				return async ({ update }) => {
+					await update();
+					syncing = false;
+				};
+			}}
+			class="mb-3"
+		>
+			<button type="submit" class="btn btn-primary w-full" disabled={syncing}>
+				<RefreshCw size={16} class={syncing ? 'animate-spin' : ''} />
+				{syncing ? 'Synchronisation…' : 'Synchroniser les clients'}
+			</button>
+		</form>
+		<a href="/admin/customers/create" class="btn btn-primary">
+			<UserPlus size={16} />
+			Ajouter un client
+		</a>
+	</div>
 	<CustomersList customers={data.customersList} />
 </div>
