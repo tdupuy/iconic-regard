@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance, applyAction } from '$app/forms';
+	import { LoyaltyStars } from '$lib/client/components/admin/molecules/LoyaltyStars';
 	import { formatDateTime } from '$lib/utils';
 	import { PenLine, Phone, Mail, UserPlus, UserPen } from '@lucide/svelte';
 	import {
@@ -155,7 +156,19 @@
 					</div>
 				</div>
 			{/if}
-
+			{#if type === 'update'}
+				<LoyaltyStars
+					rating={customer.loyaltyRating}
+					ratedAt={customer.loyaltyRatedAt}
+					onRate={(rating, ratedAt) => {
+						fetch(`?/updateCustomerLoyalty/${data.customer.id}`, {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ loyaltyRating: rating, loyaltyRatedAt: ratedAt })
+						});
+					}}
+				/>
+			{/if}
 			<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
 				{submitting ? 'Enregistrement...' : submitLabel}
 			</button>
