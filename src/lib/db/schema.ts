@@ -60,5 +60,6 @@ export const customerNotes = pgTable('customer_notes', {
 		.references(() => customers.id, { onDelete: 'cascade' }),
 	note: text('note').notNull(),
 	createdAt: timestamp('created_at').defaultNow().notNull(),
-	updatedAt: timestamp('updated_at').defaultNow().notNull()
+	updatedAt: timestamp('updated_at').defaultNow().notNull(),
+	test: varchar('test', { length: 100 }).notNull().default('test')
 });

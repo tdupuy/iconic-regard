@@ -1,6 +1,6 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
-	"buildCommand": "npm run vercel-build && npm run postvercel-build",
+	"buildCommand": "npm run build && npx drizzle-kit push",
 	"crons": [
 		{
 			"path": "/cron/add-customers",

@@ -6,8 +6,6 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"vercel-build": "vite build",
-		"postvercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then npm run db:migrate || true; else npm run db:push -- --force || true; fi",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -17,9 +15,8 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"db:push": "drizzle-kit push --force",
+		"db:push": "drizzle-kit push",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "node scripts/apply-migrations.cjs",
 		"db:studio": "drizzle-kit studio"
 	},
 	"devDependencies": {

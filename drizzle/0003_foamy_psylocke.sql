@@ -1,1 +1,0 @@
-ALTER TABLE "services" ALTER COLUMN "category" SET DATA TYPE integer;
