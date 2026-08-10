@@ -24,7 +24,8 @@
 		title,
 		description,
 		submitLabel = 'Enregistrer',
-		type
+		type,
+		visits = []
 	}: {
 		customer?: Customer | null;
 		action: string;
@@ -32,6 +33,7 @@
 		description: string;
 		submitLabel?: string;
 		type: 'create' | 'update';
+		visits?: Date[];
 	} = $props();
 
 	let form = $state({
@@ -39,6 +41,8 @@
 		phone_number: customer?.phoneNumber ?? '',
 		email: customer?.email ?? ''
 	});
+
+	console.log('visits:', visits);
 
 	let submitting = $state(false);
 	let message = $state<string | null>(null);
@@ -156,8 +160,8 @@
 					</div>
 				</div>
 			{/if}
-			{#if type === 'update'}
-				<LoyaltyStars visits={customer?.visits ?? []} />
+			{#if type === 'update' && customer}
+				<LoyaltyStars customerId={customer.id} {visits} />
 			{/if}
 			<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
 				{submitting ? 'Enregistrement...' : submitLabel}
