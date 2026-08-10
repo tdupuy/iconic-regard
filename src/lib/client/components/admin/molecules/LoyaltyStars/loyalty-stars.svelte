@@ -21,7 +21,7 @@
 		{#each [1, 2, 3, 4, 5] as star (star)}
 			<button
 				type="button"
-				class="text-2xl transition-colors"
+				class="text-5xl transition-colors"
 				class:text-yellow-400={(hovered ?? rating) >= star}
 				class:text-gray-300={(hovered ?? rating) < star}
 				onmouseenter={() => (hovered = star)}
