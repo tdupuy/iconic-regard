@@ -62,3 +62,12 @@ export const customerNotes = pgTable('customer_notes', {
 	createdAt: timestamp('created_at').defaultNow().notNull(),
 	updatedAt: timestamp('updated_at').defaultNow().notNull()
 });
+
+export const loyalty = pgTable('loyalty', {
+	id: serial('id').primaryKey(),
+	customerId: uuid('customer_id')
+		.notNull()
+		.references(() => customers.id, { onDelete: 'cascade' }),
+	visits: integer('visits').notNull().default(0),
+	createdAt: timestamp('created_at').defaultNow().notNull()
+});
