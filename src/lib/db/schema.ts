@@ -68,6 +68,5 @@ export const loyalty = pgTable('loyalty', {
 	customerId: uuid('customer_id')
 		.notNull()
 		.references(() => customers.id, { onDelete: 'cascade' }),
-	visits: integer('visits').notNull().default(0),
 	createdAt: timestamp('created_at').defaultNow().notNull()
 });
