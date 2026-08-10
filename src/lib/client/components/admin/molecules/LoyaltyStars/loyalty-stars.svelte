@@ -1,42 +1,39 @@
 <script lang="ts">
 	interface Props {
-		rating?: number;
-		ratedAt?: Date | null;
-		onRate?: (rating: number, ratedAt: Date) => void;
+		visits: Date[]; // une entrée par passage, vient de la BDD
 	}
 
-	let { rating = 0, ratedAt = null, onRate }: Props = $props();
+	let { visits }: Props = $props();
 
-	let hovered = $state<number | null>(null);
-
-	function handleClick(value: number) {
-		rating = value;
-		ratedAt = new Date();
-		onRate?.(rating, ratedAt);
-	}
+	const count = $derived(visits.length);
+	const isComplete = $derived(count >= 5);
 </script>
 
-<div class="flex flex-col gap-1">
+<div class="flex flex-col items-start gap-1">
 	<div class="flex gap-1">
 		{#each [1, 2, 3, 4, 5] as star (star)}
-			<button
-				type="button"
-				class="text-5xl transition-colors"
-				class:text-yellow-400={(hovered ?? rating) >= star}
-				class:text-gray-300={(hovered ?? rating) < star}
-				onmouseenter={() => (hovered = star)}
-				onmouseleave={() => (hovered = null)}
-				onclick={() => handleClick(star)}
-				aria-label={`Noter ${star} étoile${star > 1 ? 's' : ''}`}
-			>
-				★
-			</button>
+			<div class="flex flex-col items-center">
+				<span
+					class="text-4xl transition-colors"
+					class:text-yellow-400={count >= star}
+					class:text-gray-300={count < star}
+				>
+					★
+				</span>
+				{#if visits[star - 1]}
+					<span class="text-base-content/50 text-[10px]">
+						{visits[star - 1].toLocaleDateString('fr-FR')}
+					</span>
+				{/if}
+			</div>
 		{/each}
 	</div>
 
-	{#if ratedAt}
+	{#if isComplete}
+		<span class="badge badge-success">Réduction débloquée 🎉</span>
+	{:else}
 		<span class="text-base-content/60 text-xs">
-			Noté le {ratedAt.toLocaleDateString('fr-FR')}
+			Plus que {5 - count} pour ta réduc'
 		</span>
 	{/if}
 </div>

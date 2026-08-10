@@ -157,17 +157,7 @@
 				</div>
 			{/if}
 			{#if type === 'update'}
-				<LoyaltyStars
-					rating={customer.loyaltyRating}
-					ratedAt={customer.loyaltyRatedAt}
-					onRate={(rating, ratedAt) => {
-						fetch(`?/updateCustomerLoyalty/${data.customer.id}`, {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify({ loyaltyRating: rating, loyaltyRatedAt: ratedAt })
-						});
-					}}
-				/>
+				<LoyaltyStars visits={customer?.visits ?? []} />
 			{/if}
 			<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
 				{submitting ? 'Enregistrement...' : submitLabel}
