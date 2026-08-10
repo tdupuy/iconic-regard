@@ -30,7 +30,6 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions: Actions = {
 	updateCustomer: async ({ request, params }) => {
-		console.log('params.id:', params.id);
 		const formData = await request.formData();
 		const customerId = params.id;
 		const name = String(formData.get('name') ?? '').trim();

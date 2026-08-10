@@ -42,8 +42,6 @@
 		email: customer?.email ?? ''
 	});
 
-	console.log('visits:', visits);
-
 	let submitting = $state(false);
 	let message = $state<string | null>(null);
 </script>

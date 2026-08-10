@@ -48,7 +48,6 @@
 			bgActionBtn: 'bg-accent'
 		}
 	];
-	console.log(data.services);
 </script>
 
 <PageTitle title={data.title} />
