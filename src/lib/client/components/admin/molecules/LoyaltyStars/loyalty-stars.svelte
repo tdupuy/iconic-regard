@@ -26,7 +26,17 @@
 <div class="flex flex-col items-start gap-1">
 	<div class="flex gap-1">
 		{#each [1, 2, 3, 4, 5] as star (star)}
-			<div class="flex flex-col items-center">
+			<div class="relative flex flex-col items-center">
+				{#if visits[star - 1]}
+					<span
+						class="text-base-content/50 absolute left-1/2 -translate-x-1/2 text-[10px] whitespace-nowrap"
+						class:-top-4={star % 2 === 0}
+						class:-bottom-4={star % 2 !== 0}
+					>
+						{visits[star - 1].toLocaleDateString('fr-FR')}
+					</span>
+				{/if}
+
 				<button
 					type="button"
 					class="text-4xl transition-colors disabled:cursor-not-allowed"
@@ -38,16 +48,11 @@
 				>
 					★
 				</button>
-				{#if visits[star - 1]}
-					<span class="text-base-content/50 text-[10px]">
-						{visits[star - 1].toLocaleDateString('fr-FR')}
-					</span>
-				{/if}
 			</div>
 		{/each}
 	</div>
 
 	{#if count >= 5}
-		<span class="badge badge-success">Réduction débloquée 🎉</span>
+		<span class="badge badge-success mt-6">Réduction débloquée 🎉</span>
 	{/if}
 </div>
