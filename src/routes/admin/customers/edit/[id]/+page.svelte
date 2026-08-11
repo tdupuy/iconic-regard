@@ -7,6 +7,7 @@
 
 <CustomerForm
 	customer={data.customer}
+	visits={data.visits}
 	action="?/updateCustomer"
 	title="Édition de client"
 	description="Modifiez les informations du client ci-dessous."

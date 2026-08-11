@@ -3,7 +3,7 @@ import type { PageServerLoad, Actions } from './$types';
 import { decrypt } from '$lib/server/crypto';
 import { upsertCustomer, softDeleteCustomer } from '$lib/server/customer';
 import { db } from '$lib/db';
-import { customers } from '$lib/db/schema';
+import { customers, loyalty } from '$lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -19,14 +19,17 @@ export const load: PageServerLoad = async ({ params }) => {
 	if (!customer || customer.length === 0) {
 		throw error(404, 'Not found');
 	}
+
+	const loyaltyVisits = await db.select().from(loyalty).where(eq(loyalty.customerId, params.id));
+
 	return {
-		customer: customer[0]
+		customer: customer[0],
+		visits: loyaltyVisits.map((v) => v.createdAt)
 	};
 };
 
 export const actions: Actions = {
 	updateCustomer: async ({ request, params }) => {
-		console.log('params.id:', params.id);
 		const formData = await request.formData();
 		const customerId = params.id;
 		const name = String(formData.get('name') ?? '').trim();

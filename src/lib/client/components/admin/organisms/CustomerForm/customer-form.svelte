@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance, applyAction } from '$app/forms';
+	import { LoyaltyStars } from '$lib/client/components/admin/molecules/LoyaltyStars';
 	import { formatDateTime } from '$lib/utils';
 	import { PenLine, Phone, Mail, UserPlus, UserPen } from '@lucide/svelte';
 	import {
@@ -23,7 +24,8 @@
 		title,
 		description,
 		submitLabel = 'Enregistrer',
-		type
+		type,
+		visits = []
 	}: {
 		customer?: Customer | null;
 		action: string;
@@ -31,6 +33,7 @@
 		description: string;
 		submitLabel?: string;
 		type: 'create' | 'update';
+		visits?: Date[];
 	} = $props();
 
 	let form = $state({
@@ -155,7 +158,9 @@
 					</div>
 				</div>
 			{/if}
-
+			{#if type === 'update' && customer}
+				<LoyaltyStars customerId={customer.id} {visits} />
+			{/if}
 			<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
 				{submitting ? 'Enregistrement...' : submitLabel}
 			</button>
