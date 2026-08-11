@@ -1,12 +1,15 @@
 <script lang="ts">
+	import { ConfirmDialog } from '$lib/client/components/admin/atoms/ConfirmDialog';
+
 	interface Props {
 		customerId: string;
-		visits: Date[]; // vient du load (devalue), donc déjà de vraies Date
+		visits: Date[];
 	}
 
 	let { customerId, visits = $bindable() }: Props = $props();
 
 	let loading = $state(false);
+	let confirmDialog: ReturnType<typeof ConfirmDialog>;
 	const count = $derived(visits.length);
 
 	async function addVisit() {
@@ -16,7 +19,18 @@
 		const res = await fetch(`/api/loyalty/${customerId}`, { method: 'POST' });
 		if (res.ok) {
 			const data = await res.json();
-			visits = data.visits.map((v: string) => new Date(v)); // ici on reconvertit, car json() renvoie des strings
+			visits = data.visits.map((v: string) => new Date(v));
+		}
+
+		loading = false;
+	}
+
+	async function resetVisits() {
+		loading = true;
+
+		const res = await fetch(`/api/loyalty/${customerId}`, { method: 'DELETE' });
+		if (res.ok) {
+			visits = [];
 		}
 
 		loading = false;
@@ -54,5 +68,20 @@
 
 	{#if count >= 5}
 		<span class="badge badge-success mt-6">Réduction débloquée 🎉</span>
+		<button
+			type="button"
+			class="btn btn-xs btn-outline"
+			disabled={loading}
+			onclick={() => confirmDialog.open()}
+		>
+			Réinitialiser
+		</button>
 	{/if}
 </div>
+<ConfirmDialog
+	bind:this={confirmDialog}
+	title="Réinitialiser la fidélité ?"
+	message={`Cette action supprime définitivement l'historique des ${count} passage${count > 1 ? 's' : ''} de ce client. Impossible de revenir en arrière.`}
+	confirmLabel="Réinitialiser"
+	onConfirm={resetVisits}
+/>

@@ -17,3 +17,11 @@ export const POST: RequestHandler = async ({ params }) => {
 
 	return json({ visits: [...existing, created].map((v) => v.createdAt) });
 };
+
+export const DELETE: RequestHandler = async ({ params }) => {
+	const { customerId } = params;
+
+	await db.delete(loyalty).where(eq(loyalty.customerId, customerId));
+
+	return json({ visits: [] });
+};
