@@ -23,5 +23,5 @@
 		{#if Icon}<Icon class="h-3 w-3 shrink-0" />{/if}
 		{label}
 	</label>
-	<input {id} name={id} {type} bind:value {required} class="input input-bordered w-full" />
+	<input {id} name={id} {type} bind:value {required} class="input input-bordered w-full bg-white" />
 </div>

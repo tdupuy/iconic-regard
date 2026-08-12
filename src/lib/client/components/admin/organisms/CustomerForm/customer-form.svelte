@@ -116,9 +116,9 @@
 				}
 			};
 		}}
-		class="card bg-base-100 w-full rounded-xl border"
+		class="card w-full"
 	>
-		<div class="card-body gap-3 p-4">
+		<div class="card-body w-full gap-3 rounded-xl border border-gray-400 bg-white p-4">
 			{#if customer}
 				<input type="hidden" name="id" value={customer.id} />
 			{/if}
@@ -139,14 +139,40 @@
 					<TypicalFormField id="email" label="Email" icon={Mail} bind:value={form.email} />
 				</div>
 			</div>
+			<hr />
+			{#if type === 'update' && customer}
+				<div class="rounded-box bg-base-200/30 text-base-content w-full px-3.5 py-3">
+					<div class="flex items-center gap-1 text-sm leading-4 font-normal">
+						<svg
+							class="text-primary size-3.5"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.8"
+							stroke-linejoin="round"
+						>
+							<path
+								d="M12 3.5l2.05 4.15 4.58.67-3.31 3.23.78 4.56L12 13.96l-4.1 2.15.78-4.56-3.31-3.23 4.58-.67L12 3.5z"
+							/>
+						</svg>
 
+						<span>Fidélité</span>
+					</div>
+					<LoyaltyStars customerId={customer.id} {visits} />
+				</div>
+			{/if}
+
+			<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
+				{submitting ? 'Enregistrement...' : submitLabel}
+			</button>
 			{#if customer}
-				<div class="mt-3 grid gap-4 sm:grid-cols-2">
+				<div class="flex justify-between">
 					<div class="flex flex-col gap-1">
 						<ReadonlyFormField
 							label="Créé le :"
 							icon={UserPlus}
 							value={formatDateTime(customer.createdAt)}
+							extraClasses="flex items-center gap-1 text-[11px] opacity-50"
 						/>
 					</div>
 					<div class="flex flex-col gap-1">
@@ -154,16 +180,11 @@
 							label="Mis à jour le :"
 							icon={UserPen}
 							value={formatDateTime(customer.updatedAt)}
+							extraClasses="flex items-center gap-1 text-[11px] opacity-50"
 						/>
 					</div>
 				</div>
 			{/if}
-			{#if type === 'update' && customer}
-				<LoyaltyStars customerId={customer.id} {visits} />
-			{/if}
-			<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
-				{submitting ? 'Enregistrement...' : submitLabel}
-			</button>
 		</div>
 	</form>
 	{#if type === 'update' && customer}
