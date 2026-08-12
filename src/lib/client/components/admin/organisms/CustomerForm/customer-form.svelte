@@ -161,31 +161,30 @@
 					<LoyaltyStars customerId={customer.id} {visits} />
 				</div>
 			{/if}
-
-			<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
-				{submitting ? 'Enregistrement...' : submitLabel}
-			</button>
-			{#if customer}
-				<div class="flex justify-between">
-					<div class="flex flex-col gap-1">
-						<ReadonlyFormField
-							label="Créé le :"
-							icon={UserPlus}
-							value={formatDateTime(customer.createdAt)}
-							extraClasses="flex items-center gap-1 text-[11px] opacity-50"
-						/>
-					</div>
-					<div class="flex flex-col gap-1">
-						<ReadonlyFormField
-							label="Mis à jour le :"
-							icon={UserPen}
-							value={formatDateTime(customer.updatedAt)}
-							extraClasses="flex items-center gap-1 text-[11px] opacity-50"
-						/>
-					</div>
-				</div>
-			{/if}
 		</div>
+		<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
+			{submitting ? 'Enregistrement...' : submitLabel}
+		</button>
+		{#if customer}
+			<div class="mt-2 flex justify-between">
+				<div class="flex flex-col gap-1">
+					<ReadonlyFormField
+						label="Créé le :"
+						icon={UserPlus}
+						value={formatDateTime(customer.createdAt)}
+						extraClasses="flex items-center gap-1 text-[11px] opacity-50"
+					/>
+				</div>
+				<div class="flex flex-col gap-1">
+					<ReadonlyFormField
+						label="Mis à jour le :"
+						icon={UserPen}
+						value={formatDateTime(customer.updatedAt)}
+						extraClasses="flex items-center gap-1 text-[11px] opacity-50"
+					/>
+				</div>
+			</div>
+		{/if}
 	</form>
 	{#if type === 'update' && customer}
 		<div class="mt-3">
