@@ -24,9 +24,22 @@
 			</a>
 		</div>
 	{/if}
-	<p
-		class="font-body-light text-primary/40 text-[clamp(0.55rem,1.1vw,0.66rem)] tracking-[0.1em] uppercase"
-	>
-		© 2025 Iconic Regard — Tous droits réservés
-	</p>
+	<div class="flex justify-center gap-4 text-center">
+		<p
+			class="font-body-light text-primary/40 text-[clamp(0.55rem,1.1vw,0.66rem)] tracking-[0.1em] uppercase"
+		>
+			© 2025 Iconic Regard — Tous droits réservés
+		</p>
+		<span
+			class="font-body-light text-primary/40 text-[clamp(0.55rem,1.1vw,0.66rem)] tracking-[0.1em] uppercase"
+		>
+			—
+		</span>
+		<a
+			href="legalnotice"
+			class="font-body-light text-primary/40 text-[clamp(0.55rem,1.1vw,0.66rem)] tracking-[0.1em] uppercase"
+		>
+			Mentions légales
+		</a>
+	</div>
 </footer>
