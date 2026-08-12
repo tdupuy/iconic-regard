@@ -4,11 +4,13 @@
 	let {
 		label,
 		icon: Icon,
-		value = $bindable()
+		value = $bindable(),
+		extraClasses = ''
 	}: {
 		label: string;
 		icon?: typeof IconType;
 		value: string;
+		extraClasses?: string;
 	} = $props();
 </script>
 
@@ -17,7 +19,7 @@
 		{#if Icon}<Icon class="h-3 w-3 shrink-0" />{/if}
 		{label}
 	</label>
-	<div class="align-items-center flex">
+	<div class={`align-items-center flex ${extraClasses}`}>
 		<span class="truncate">{value}</span>
 	</div>
 </div>

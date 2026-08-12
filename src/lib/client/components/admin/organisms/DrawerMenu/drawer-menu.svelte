@@ -9,7 +9,7 @@
 <div class="drawer-side is-drawer-close:overflow-visible">
 	<label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
 	<div
-		class="is-drawer-close:w-14 is-drawer-open:w-64 flex min-h-full flex-col items-start bg-black"
+		class="is-drawer-close:w-14 is-drawer-open:w-64 bg-neutral text-neutral-content flex min-h-full flex-col items-start"
 	>
 		<!-- Sidebar content here -->
 		<ul class="menu w-full grow">
@@ -28,7 +28,7 @@
 						stroke-linecap="round"
 						stroke-width="2"
 						fill="none"
-						stroke="white"
+						stroke="currentColor"
 						class="my-1.5 inline-block size-6"
 						><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path
 							d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
@@ -76,7 +76,7 @@
 						stroke-linecap="round"
 						stroke-width="2"
 						fill="none"
-						stroke="white"
+						stroke="currentColor"
 						class="my-1.5 inline-block size-6"
 						><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path
 							d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
@@ -98,7 +98,7 @@
 						stroke-linecap="round"
 						stroke-width="2"
 						fill="none"
-						stroke="white"
+						stroke="currentColor"
 						class="my-1.5 inline-block size-6"
 						><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline
 							points="16 17 21 12 16 7"
