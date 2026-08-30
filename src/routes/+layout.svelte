@@ -5,7 +5,7 @@
 
 	let { children } = $props();
 
-	const GA_ID = 'G-F121F18W2B';
+	/*const GA_ID = 'G-F121F18W2B';
 
 	onMount(() => {
 		if (!import.meta.env.PROD) return;
@@ -21,7 +21,7 @@
 		}
 		gtag('js', new Date());
 		gtag('config', GA_ID);
-	});
+	});*/
 </script>
 
 <svelte:head>
