@@ -54,7 +54,7 @@ export const pendingCustomers = pgTable('pending_customers', {
 });
 
 export const customerNotes = pgTable('customer_notes', {
-	id: serial('id').primaryKey(),
+	id: serial('id').primaryKey().unique(),
 	customerId: uuid('customer_id')
 		.notNull()
 		.references(() => customers.id, { onDelete: 'cascade' }),
