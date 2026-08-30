@@ -2,7 +2,7 @@
 import { db } from '$lib/db';
 import { customers } from '$lib/db/schema';
 import { encrypt } from '$lib/server/crypto';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 
 export interface NewCustomer {
 	name: string;
@@ -73,4 +73,13 @@ export async function upsertCustomer(data: UpsertCustomer) {
 
 export async function softDeleteCustomer(id: string) {
 	await db.update(customers).set({ status: 'cancelled' }).where(eq(customers.id, id));
+}
+
+export async function getActiveCustomer(id: string) {
+	const [customer] = await db
+		.select()
+		.from(customers)
+		.where(and(eq(customers.id, id), eq(customers.status, 'active')));
+
+	return customer;
 }
