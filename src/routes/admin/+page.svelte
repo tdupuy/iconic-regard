@@ -85,19 +85,24 @@
 
 	const today = new Date();
 
-	// Swipe : doigt qui va vers la gauche = semaine +1, vers la droite = semaine -1
 	let touchStartX = 0;
+	let touchStartY = 0;
 	const SWIPE_THRESHOLD = 50;
 
 	function handleTouchStart(e: TouchEvent) {
 		touchStartX = e.touches[0].clientX;
+		touchStartY = e.touches[0].clientY;
 	}
 
 	function handleTouchEnd(e: TouchEvent) {
-		const diff = e.changedTouches[0].clientX - touchStartX;
-		if (diff < -SWIPE_THRESHOLD) {
+		const diffX = e.changedTouches[0].clientX - touchStartX;
+		const diffY = e.changedTouches[0].clientY - touchStartY;
+
+		if (Math.abs(diffX) < Math.abs(diffY)) return;
+
+		if (diffX < -SWIPE_THRESHOLD) {
 			shiftWeek(1);
-		} else if (diff > SWIPE_THRESHOLD) {
+		} else if (diffX > SWIPE_THRESHOLD) {
 			shiftWeek(-1);
 		}
 	}
