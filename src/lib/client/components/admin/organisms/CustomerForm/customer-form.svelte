@@ -161,12 +161,15 @@
 					<LoyaltyStars customerId={customer.id} {visits} />
 				</div>
 				<hr />
-				<div class="rounded-box bg-base-200/30 w-full px-3.5 py-3">
+				<a
+					href="/admin/customers/notes/{customer.id}"
+					class="rounded-box bg-base-200/30 hover:bg-base-200/50 flex w-full items-center justify-between px-3.5 py-3 transition-colors"
+				>
 					<div class="text-base-content flex items-center gap-1 text-sm leading-4 font-normal">
 						<NotebookPen class="text-primary h-3 w-3 shrink-0" />
 						<span>Notes</span>
 					</div>
-				</div>
+				</a>
 			{/if}
 		</div>
 		<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
