@@ -2,7 +2,7 @@
 	import { enhance, applyAction } from '$app/forms';
 	import { LoyaltyStars } from '$lib/client/components/admin/molecules/LoyaltyStars';
 	import { formatDateTime } from '$lib/utils';
-	import { PenLine, Phone, Mail, UserPlus, UserPen, NotebookPen, Trash2 } from '@lucide/svelte';
+	import { PenLine, Phone, Mail, UserPlus, UserPen, NotebookPen } from '@lucide/svelte';
 	import {
 		TypicalFormField,
 		ReadonlyFormField
@@ -166,10 +166,6 @@
 						<NotebookPen class="text-primary h-3 w-3 shrink-0" />
 						<span>Notes</span>
 					</div>
-					<div class="text-primary mt-1 text-sm">> 2026-07-15</div>
-				</div>
-				<div class="mt-0 flex justify-end">
-					<a href="#" class="text-primary text-xs leading-4"> (+) Historique </a>
 				</div>
 			{/if}
 		</div>
