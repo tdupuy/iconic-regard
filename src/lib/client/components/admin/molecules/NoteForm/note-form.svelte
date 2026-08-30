@@ -3,11 +3,12 @@
 	import { UserPlus, UserPen, NotebookPen } from '@lucide/svelte';
 	import { ReadonlyFormField } from '$lib/client/components/admin/atoms/FormFields';
 
-	const customerName = 'Jean Dupont';
-	const createdAt = new Date('2024-11-03T10:15:00');
-	const updatedAt = new Date('2025-01-20T16:42:00');
-
-	let notes = $state('');
+	let {
+		customerName,
+		createdAt,
+		updatedAt,
+		notes = ''
+	}: { customerName: string; createdAt: Date; updatedAt: Date; notes: string } = $props();
 </script>
 
 <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
@@ -44,7 +45,7 @@
 					id="notes"
 					name="notes"
 					bind:value={notes}
-					rows="8"
+					rows="14"
 					class="textarea textarea-bordered w-full"
 					placeholder="Écrire une note sur ce client..."
 				></textarea>
