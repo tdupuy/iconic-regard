@@ -61,24 +61,42 @@
 	const next = () => (current = (current + 1) % filteredServices.length);
 
 	let touchStartX = 0;
+	let touchStartY = 0;
+	let isHorizontalSwipe: boolean | null = null;
 
 	function onTouchStart(e: TouchEvent) {
 		touchStartX = e.touches[0].clientX;
+		touchStartY = e.touches[0].clientY;
+		isHorizontalSwipe = null;
 		dragging = true;
 		dragX = 0;
 	}
 
 	function onTouchMove(e: TouchEvent) {
-		e.preventDefault();
-		dragX = e.touches[0].clientX - touchStartX;
+		const deltaX = e.touches[0].clientX - touchStartX;
+		const deltaY = e.touches[0].clientY - touchStartY;
+
+		// Lock direction once the gesture is clear enough
+		if (isHorizontalSwipe === null && (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10)) {
+			isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
+		}
+
+		if (isHorizontalSwipe) {
+			e.preventDefault();
+			dragX = deltaX;
+		}
 	}
 
 	function onTouchEnd(e: TouchEvent) {
 		dragging = false;
 		const delta = touchStartX - e.changedTouches[0].clientX;
 		dragX = 0;
-		if (Math.abs(delta) < 50) return;
-		delta > 0 ? next() : prev();
+		if (!isHorizontalSwipe || Math.abs(delta) < 50) return;
+		if (delta > 0) {
+			next();
+		} else {
+			prev();
+		}
 	}
 
 	function touchHandler(node: HTMLElement) {
