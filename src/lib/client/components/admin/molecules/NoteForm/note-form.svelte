@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { formatDateTime } from '$lib/utils';
 	import { UserPlus, UserPen, NotebookPen } from '@lucide/svelte';
 	import { ReadonlyFormField } from '$lib/client/components/admin/atoms/FormFields';
@@ -12,11 +13,29 @@
 </script>
 
 <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-	<div class="mb-6 flex flex-col gap-1">
-		<h1 class="text-3xl font-bold text-slate-900">Notes - {customerName}</h1>
+	<div class="mb-8 flex items-center justify-between gap-4">
+		<div class="flex flex-col gap-1">
+			<h1 class="text-3xl font-bold text-slate-900">Notes - {customerName}</h1>
+		</div>
+		<a href="/admin/customers" class="btn btn-ghost btn-sm gap-1">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-4 w-4 shrink-0"
+				width="16"
+				height="16"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path d="m12 19-7-7 7-7" />
+				<path d="M19 12H5" />
+			</svg>
+			Retour
+		</a>
 	</div>
 
-	<form class="card w-full">
+	<form method="POST" use:enhance class="card w-full">
 		<div class="card-body w-full gap-3 rounded-xl border border-gray-400 bg-white p-4">
 			<div class="flex justify-between">
 				<ReadonlyFormField

@@ -5,8 +5,8 @@
 </script>
 
 <NoteForm
-	customerName={data.notes[0]?.name}
-	createdAt={data.notes[0]?.createdAt ?? new Date()}
-	updatedAt={data.notes[0]?.updatedAt ?? new Date()}
-	notes={data.notes[0]?.note ?? ''}
+	customerName={data.customerName}
+	createdAt={data.note?.createdAt ?? new Date()}
+	updatedAt={data.note?.updatedAt ?? new Date()}
+	notes={data.note?.note ?? ''}
 />
