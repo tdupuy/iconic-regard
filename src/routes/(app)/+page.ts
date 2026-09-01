@@ -1,1 +1,1 @@
-export const load = () => ({ title: 'Institut de beauté du regard' });
+export const load = () => ({ title: 'Beauté du regard à Coulans-sur-Gée' });
