@@ -1,1 +1,1 @@
-export const load = () => ({ title: 'Accueil' });
+export const load = () => ({ title: 'Institut de beauté du regard' });
