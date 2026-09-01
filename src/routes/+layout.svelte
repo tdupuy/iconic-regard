@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import './layout.css';
 	import '../lib/client/styles/app.css';
 
