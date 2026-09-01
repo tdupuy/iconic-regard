@@ -51,8 +51,8 @@
 	<p
 		class="text-base-content mt-2 mb-5 flex flex-row items-center gap-4 text-center text-[clamp(1rem,1vw,1.5rem)]"
 	>
-		<MapPinHouse size={28} strokeWidth={1.5} class="mb-4" /> 1 Rue nationale<br />72550
-		Coulans-sur-Gée
+		<MapPinHouse size={28} strokeWidth={1.5} class="mb-4" /> Espace parta'gée bien-être <br />1 Rue
+		nationale<br />72550 Coulans-sur-Gée
 	</p>
 
 	<div class="mt-10 w-full overflow-hidden rounded-xl border border-gray-200 shadow-sm lg:w-[30%]">
