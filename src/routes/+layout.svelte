@@ -2,7 +2,7 @@
 	import './layout.css';
 	import '../lib/client/styles/app.css';
 	import { page } from '$app/state';
-	import { buildBeautySalonJsonLd } from '$lib/server/seo';
+	import { buildBeautySalonJsonLd } from '$lib/seo';
 
 	let { children } = $props();
 
