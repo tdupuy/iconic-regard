@@ -15,6 +15,7 @@
 <svelte:head>
 	<link rel="icon" type="image/png" href="assets/favicon.png" />
 	<title>Admin - Iconic Regard</title>
+	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
 <app data-theme="violet-perso">
