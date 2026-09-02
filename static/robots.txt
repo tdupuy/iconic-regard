@@ -1,4 +1,9 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /login
+Disallow: /logout
+Disallow: /api
+Disallow: /cron
+Disallow: /webhook
 
 Sitemap: https://iconic-regard.com/sitemap.xml
