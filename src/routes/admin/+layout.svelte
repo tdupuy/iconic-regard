@@ -2,6 +2,7 @@
 	import '../../lib/client/styles/app.css';
 	import { DrawerMenu } from '../../lib/client/components/admin/organisms/DrawerMenu';
 	import { afterNavigate } from '$app/navigation';
+	import { Eye } from '@lucide/svelte';
 
 	let { children } = $props();
 
@@ -40,6 +41,16 @@
 					>
 				</label>
 				<div class="px-4 text-sm font-medium">Admin iconic-regard</div>
+
+				<a
+					href="/"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn btn-sm text-neutral-content hover:bg-neutral-content/10 ml-auto gap-2 border-none bg-transparent"
+				>
+					<Eye class="size-5" />
+					<span class="hidden sm:inline">Voir le site</span>
+				</a>
 			</nav>
 			<!-- Page content here -->
 			<div class="p-4">
