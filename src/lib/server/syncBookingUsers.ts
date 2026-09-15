@@ -74,6 +74,18 @@ export async function syncCustomersFromBookings() {
 			continue;
 		}
 
+		const alreadyPending = knownCustomers.find((c) => {
+			if (c.status !== 'pending') return false;
+			return (
+				decrypt(c.phoneNumber) === bookingPhone &&
+				(c.email ? decrypt(c.email) : null) === bookingEmail
+			);
+		});
+		if (alreadyPending) {
+			results.skipped++;
+			continue;
+		}
+
 		const match = findMatch(knownCustomers, bookingPhone, bookingEmail, bookingName);
 
 		if (match) {
