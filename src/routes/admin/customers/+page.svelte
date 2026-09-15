@@ -10,6 +10,10 @@
 
 <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<h1 class="mb-6 text-4xl font-bold text-slate-900">Liste des clients</h1>
+	<div class="mb-6 flex gap-2">
+		<div class="badge badge-lg badge-ghost">{data.activeCount} actifs</div>
+		<div class="badge badge-lg badge-warning">{data.pendingCount} en attente</div>
+	</div>
 	{#if data.mergeError}
 		<section class="rounded-box mb-12 border border-rose-200 bg-rose-50 p-6 text-rose-900">
 			{data.mergeError}
