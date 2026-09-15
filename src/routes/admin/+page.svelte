@@ -61,10 +61,6 @@
 		return event.summary ?? 'Sans titre';
 	}
 
-	function openEvent(event: GoogleCalendarEvent) {
-		goto(`/planning/${event.id}`);
-	}
-
 	function toDateParam(date: Date): string {
 		const y = date.getFullYear();
 		const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -164,13 +160,12 @@
 						<p class="text-base-content/40 my-2 text-center text-sm">Aucun RDV</p>
 					{:else}
 						{#each eventsByDay[i] as event (event.id)}
-							<button
-								class="bg-primary/10 hover:bg-primary/20 cursor-pointer rounded-lg p-3 text-left transition-colors"
-								onclick={() => openEvent(event)}
+							<span
+								class="bg-primary/10 hover:bg-primary/20 rounded-lg p-3 text-left transition-colors"
 							>
 								<p class="text-sm font-medium">{formatTimeRange(event)}</p>
 								<p class="text-base-content/60 truncate text-sm">{serviceLabel(event)}</p>
-							</button>
+							</span>
 						{/each}
 					{/if}
 				</div>
