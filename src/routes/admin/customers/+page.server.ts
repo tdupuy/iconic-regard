@@ -48,6 +48,8 @@ export const load: PageServerLoad = async ({ url }) => {
 			bookings: pendingBookings,
 			customers: activeCustomers,
 			customersList: [...pendingBookings, ...activeCustomers],
+			activeCount: activeCustomers.length,
+			pendingCount: rows.length,
 			mergeError: url.searchParams.get('mergeError'),
 			mergeSuccess: url.searchParams.get('mergeSuccess')
 		};
