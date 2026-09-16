@@ -23,6 +23,11 @@
 		gtag('js', new Date());
 		gtag('config', 'G-F121F18W2B');
 	</script>
+	<script
+		defer
+		src="https://cloud.umami.is/script.js"
+		data-website-id="c56a40de-5f14-448e-a008-bab8721bc624"
+	></script>
 </svelte:head>
 
 <app data-theme="violet-perso">
