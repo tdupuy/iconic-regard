@@ -27,6 +27,7 @@
 		defer
 		src="https://cloud.umami.is/script.js"
 		data-website-id="c56a40de-5f14-448e-a008-bab8721bc624"
+		data-domains="iconic-regard.com,www.iconic-regard.com"
 	></script>
 </svelte:head>
 
