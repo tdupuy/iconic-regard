@@ -106,6 +106,8 @@
 				class="rounded {bgActionBtn} px-4 py-2 font-medium text-white hover:bg-purple-400"
 				data-cal-link={PUBLIC_CAL_LINK + '/' + namespace}
 				data-cal-namespace={namespace}
+				data-umami-event="Réservation cliquée"
+				data-umami-event-service={namespace}
 			>
 				Prendre rdv
 			</button>
@@ -127,6 +129,8 @@
 				class="rounded {bgActionBtn}  mx-auto px-4 py-2 font-medium text-white hover:bg-purple-400"
 				data-cal-link={PUBLIC_CAL_LINK + '/' + namespace}
 				data-cal-namespace={namespace}
+				data-umami-event="Réservation cliquée"
+				data-umami-event-service={namespace}
 			>
 				Prendre rdv
 			</button>
