@@ -21,6 +21,9 @@ export const load: PageServerLoad = async ({ url }) => {
 
 	return {
 		weekStart: weekStart.toISOString(),
-		events
+		events: events.map((e) => ({
+			...e,
+			calBookingUid: e.iCalUID?.match(/^(.+)@Cal\.com$/)?.[1]
+		}))
 	};
 };

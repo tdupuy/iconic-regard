@@ -132,12 +132,13 @@
 						<p class="text-base-content/40 my-2 text-center text-sm">Aucun RDV</p>
 					{:else}
 						{#each eventsByDay[i] as event (event.id)}
-							<span
-								class="bg-primary/10 hover:bg-primary/20 rounded-lg p-3 text-left transition-colors"
+							<button
+								class="bg-primary/10 hover:bg-primary/20 cursor-pointer rounded-lg p-3 text-left transition-colors"
+								data-booking-uid={event.calBookingUid}
 							>
 								<p class="text-sm font-medium">{formatTimeRange(event)}</p>
-								<p class="text-base-content/60 truncate text-sm">{serviceLabel(event)}</p>
-							</span>
+								<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
+							</button>
 						{/each}
 					{/if}
 				</div>
@@ -160,12 +161,14 @@
 				{:else}
 					<div class="flex flex-col gap-2">
 						{#each eventsByDay[i] as event (event.id)}
-							<div class="bg-primary/10 flex items-center justify-between rounded-lg p-3 text-left">
+							<button
+								class="bg-primary/10 flex cursor-pointer items-center justify-between rounded-lg p-3 text-left"
+							>
 								<div>
 									<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
 								</div>
 								<p class="ml-2 shrink-0 text-base font-medium">{formatTimeRange(event)}</p>
-							</div>
+							</button>
 						{/each}
 					</div>
 				{/if}
