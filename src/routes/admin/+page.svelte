@@ -4,6 +4,7 @@
 	import { eventEnd, eventStart, formatTimeRange, isSameDay, toDateParam } from '$lib/utils';
 	import type { GoogleCalendarEvent } from '$lib/server/google-calendar';
 	import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
+	import { EventDetailsDialog } from '$lib/client/components/admin/atoms/EventDetailsDialog';
 
 	type Props = {
 		data: {
@@ -13,6 +14,14 @@
 	};
 
 	let { data }: Props = $props();
+
+	let selected = $state<(typeof data.events)[number] | null>(null);
+	let details: ReturnType<typeof EventDetailsDialog>;
+
+	function select(event: (typeof data.events)[number]) {
+		selected = event;
+		details.open();
+	}
 
 	const dayLabels = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
 
@@ -135,6 +144,7 @@
 							<button
 								class="bg-primary/10 hover:bg-primary/20 cursor-pointer rounded-lg p-3 text-left transition-colors"
 								data-booking-uid={event.calBookingUid}
+								onclick={() => select(event)}
 							>
 								<p class="text-sm font-medium">{formatTimeRange(event)}</p>
 								<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
@@ -163,6 +173,7 @@
 						{#each eventsByDay[i] as event (event.id)}
 							<button
 								class="bg-primary/10 flex cursor-pointer items-center justify-between rounded-lg p-3 text-left"
+								onclick={() => select(event)}
 							>
 								<div>
 									<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
@@ -176,3 +187,8 @@
 		{/each}
 	</div>
 </div>
+<EventDetailsDialog
+	bind:this={details}
+	event={selected}
+	onDelete={(e) => console.log('delete', e.id)}
+/>
