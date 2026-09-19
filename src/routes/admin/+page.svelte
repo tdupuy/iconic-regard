@@ -3,6 +3,7 @@
 	import { navigating } from '$app/state';
 	import { eventEnd, eventStart, formatTimeRange, isSameDay, toDateParam } from '$lib/utils';
 	import type { GoogleCalendarEvent } from '$lib/server/google-calendar';
+	import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
 
 	type Props = {
 		data: {
@@ -18,7 +19,7 @@
 	// 6 jours : lundi -> samedi, pas de dimanche
 	const days = $derived(
 		Array.from({ length: 6 }, (_, i) => {
-			const date = new Date(data.weekStart);
+			const date = new SvelteDate(data.weekStart);
 			date.setDate(date.getDate() + i);
 			return date;
 		})
@@ -40,9 +41,9 @@
 	}
 
 	function shiftWeek(delta: number) {
-		const newStart = new Date(data.weekStart);
+		const newStart = new SvelteDate(data.weekStart);
 		newStart.setDate(newStart.getDate() + delta * 7);
-		const params = new URLSearchParams();
+		const params = new SvelteURLSearchParams();
 		params.set('semaine', toDateParam(newStart));
 		goto(`?${params.toString()}`);
 	}
