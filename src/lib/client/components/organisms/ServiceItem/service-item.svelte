@@ -97,19 +97,19 @@
 	<div class="mt-2 flex justify-center gap-2">
 		{#if !isService}
 			<button
-				class="rounded border {border} px-4 py-2 {iconImg} hover:{bgTablets}"
-				onclick={() => (expanded = !expanded)}
-			>
-				{expanded ? 'Voir moins' : 'En savoir plus'}
-			</button>
-			<button
 				class="rounded {bgActionBtn} px-4 py-2 font-medium text-white hover:bg-purple-400"
 				data-cal-link={PUBLIC_CAL_LINK + '/' + namespace}
 				data-cal-namespace={namespace}
 				data-umami-event="Réservation cliquée"
 				data-umami-event-service={namespace}
 			>
-				Prendre rdv
+				Prendre rendez-vous
+			</button>
+			<button
+				class="rounded border {border} px-4 py-2 {iconImg} hover:{bgTablets}"
+				onclick={() => (expanded = !expanded)}
+			>
+				{expanded ? 'Voir moins' : 'En savoir plus'}
 			</button>
 		{/if}
 	</div>
@@ -132,7 +132,7 @@
 				data-umami-event="Réservation cliquée"
 				data-umami-event-service={namespace}
 			>
-				Prendre rdv
+				Prendre rendez-vous
 			</button>
 		</div>
 	{/if}

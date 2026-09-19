@@ -14,15 +14,6 @@
 
 <svelte:head>
 	<title>Iconic Regard{page.data.title ? ` | ${page.data.title}` : ''}</title>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-F121F18W2B"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-		gtag('config', 'G-F121F18W2B');
-	</script>
 	<script
 		defer
 		src="https://cloud.umami.is/script.js"
