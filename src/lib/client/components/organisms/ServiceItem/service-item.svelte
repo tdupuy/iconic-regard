@@ -109,7 +109,7 @@
 				data-umami-event="Réservation cliquée"
 				data-umami-event-service={namespace}
 			>
-				Prendre rdv
+				Prendre rendez-vous
 			</button>
 		{/if}
 	</div>
@@ -132,7 +132,7 @@
 				data-umami-event="Réservation cliquée"
 				data-umami-event-service={namespace}
 			>
-				Prendre rdv
+				Prendre rendez-vous
 			</button>
 		</div>
 	{/if}
