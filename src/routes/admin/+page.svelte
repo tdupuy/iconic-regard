@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { navigating } from '$app/state';
+	import { eventEnd, eventStart, formatTimeRange, isSameDay, toDateParam } from '$lib/utils';
 	import type { GoogleCalendarEvent } from '$lib/server/google-calendar';
 
 	type Props = {
@@ -23,19 +24,6 @@
 		})
 	);
 
-	function isSameDay(a: Date, b: Date): boolean {
-		return a.toDateString() === b.toDateString();
-	}
-
-	// Ignore les événements "jour entier" (pas de dateTime, juste une date) pour l'instant
-	function eventStart(event: GoogleCalendarEvent): Date | null {
-		return event.start.dateTime ? new Date(event.start.dateTime) : null;
-	}
-
-	function eventEnd(event: GoogleCalendarEvent): Date | null {
-		return event.end.dateTime ? new Date(event.end.dateTime) : null;
-	}
-
 	const eventsByDay = $derived(
 		days.map((day) =>
 			data.events
@@ -47,25 +35,8 @@
 		)
 	);
 
-	function formatTimeRange(event: GoogleCalendarEvent): string {
-		const start = eventStart(event);
-		const end = eventEnd(event);
-		if (!start) return '';
-		const startStr = start.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-		if (!end) return startStr;
-		const endStr = end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-		return `${startStr} - ${endStr}`;
-	}
-
 	function serviceLabel(event: GoogleCalendarEvent): string {
 		return event.summary ?? 'Sans titre';
-	}
-
-	function toDateParam(date: Date): string {
-		const y = date.getFullYear();
-		const m = String(date.getMonth() + 1).padStart(2, '0');
-		const d = String(date.getDate()).padStart(2, '0');
-		return `${y}-${m}-${d}`;
 	}
 
 	function shiftWeek(delta: number) {
@@ -188,15 +159,12 @@
 				{:else}
 					<div class="flex flex-col gap-2">
 						{#each eventsByDay[i] as event (event.id)}
-							<button
-								class="bg-primary/10 flex items-center justify-between rounded-lg p-3 text-left"
-								onclick={() => openEvent(event)}
-							>
+							<div class="bg-primary/10 flex items-center justify-between rounded-lg p-3 text-left">
 								<div>
 									<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
 								</div>
 								<p class="ml-2 shrink-0 text-base font-medium">{formatTimeRange(event)}</p>
-							</button>
+							</div>
 						{/each}
 					</div>
 				{/if}
