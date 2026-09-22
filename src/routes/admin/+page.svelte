@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { navigating } from '$app/state';
+	import { eventEnd, eventStart, formatTimeRange, isSameDay, toDateParam } from '$lib/utils';
 	import type { GoogleCalendarEvent } from '$lib/server/google-calendar';
+	import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
+	import { EventDetailsDialog } from '$lib/client/components/admin/atoms/EventDetailsDialog';
 
 	type Props = {
 		data: {
@@ -12,29 +15,24 @@
 
 	let { data }: Props = $props();
 
+	let selected = $state<(typeof data.events)[number] | null>(null);
+	let details: ReturnType<typeof EventDetailsDialog>;
+
+	function select(event: (typeof data.events)[number]) {
+		selected = event;
+		details.open();
+	}
+
 	const dayLabels = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
 
 	// 6 jours : lundi -> samedi, pas de dimanche
 	const days = $derived(
 		Array.from({ length: 6 }, (_, i) => {
-			const date = new Date(data.weekStart);
+			const date = new SvelteDate(data.weekStart);
 			date.setDate(date.getDate() + i);
 			return date;
 		})
 	);
-
-	function isSameDay(a: Date, b: Date): boolean {
-		return a.toDateString() === b.toDateString();
-	}
-
-	// Ignore les événements "jour entier" (pas de dateTime, juste une date) pour l'instant
-	function eventStart(event: GoogleCalendarEvent): Date | null {
-		return event.start.dateTime ? new Date(event.start.dateTime) : null;
-	}
-
-	function eventEnd(event: GoogleCalendarEvent): Date | null {
-		return event.end.dateTime ? new Date(event.end.dateTime) : null;
-	}
 
 	const eventsByDay = $derived(
 		days.map((day) =>
@@ -47,31 +45,14 @@
 		)
 	);
 
-	function formatTimeRange(event: GoogleCalendarEvent): string {
-		const start = eventStart(event);
-		const end = eventEnd(event);
-		if (!start) return '';
-		const startStr = start.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-		if (!end) return startStr;
-		const endStr = end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-		return `${startStr} - ${endStr}`;
-	}
-
 	function serviceLabel(event: GoogleCalendarEvent): string {
 		return event.summary ?? 'Sans titre';
 	}
 
-	function toDateParam(date: Date): string {
-		const y = date.getFullYear();
-		const m = String(date.getMonth() + 1).padStart(2, '0');
-		const d = String(date.getDate()).padStart(2, '0');
-		return `${y}-${m}-${d}`;
-	}
-
 	function shiftWeek(delta: number) {
-		const newStart = new Date(data.weekStart);
+		const newStart = new SvelteDate(data.weekStart);
 		newStart.setDate(newStart.getDate() + delta * 7);
-		const params = new URLSearchParams();
+		const params = new SvelteURLSearchParams();
 		params.set('semaine', toDateParam(newStart));
 		goto(`?${params.toString()}`);
 	}
@@ -160,12 +141,14 @@
 						<p class="text-base-content/40 my-2 text-center text-sm">Aucun RDV</p>
 					{:else}
 						{#each eventsByDay[i] as event (event.id)}
-							<span
-								class="bg-primary/10 hover:bg-primary/20 rounded-lg p-3 text-left transition-colors"
+							<button
+								class="bg-primary/10 hover:bg-primary/20 cursor-pointer rounded-lg p-3 text-left transition-colors"
+								data-booking-uid={event.calBookingUid}
+								onclick={() => select(event)}
 							>
 								<p class="text-sm font-medium">{formatTimeRange(event)}</p>
-								<p class="text-base-content/60 truncate text-sm">{serviceLabel(event)}</p>
-							</span>
+								<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
+							</button>
 						{/each}
 					{/if}
 				</div>
@@ -189,8 +172,8 @@
 					<div class="flex flex-col gap-2">
 						{#each eventsByDay[i] as event (event.id)}
 							<button
-								class="bg-primary/10 flex items-center justify-between rounded-lg p-3 text-left"
-								onclick={() => openEvent(event)}
+								class="bg-primary/10 flex cursor-pointer items-center justify-between rounded-lg p-3 text-left"
+								onclick={() => select(event)}
 							>
 								<div>
 									<p class="text-base-content/60 text-sm">{serviceLabel(event)}</p>
@@ -204,3 +187,4 @@
 		{/each}
 	</div>
 </div>
+<EventDetailsDialog bind:this={details} event={selected} />

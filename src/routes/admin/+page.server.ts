@@ -1,26 +1,13 @@
 import type { PageServerLoad } from './$types';
 import { getCalendarEvents } from '$lib/server/google-calendar';
+import { getWeekStart } from '$lib/utils';
+import { cancelCalBooking } from '$lib/server/cal';
+import { deleteGoogleEvent } from '$lib/server/google-calendar';
+import type { Actions } from './$types';
 
 const CALENDAR_ID = 'primary';
 // Calendrier partagé, à réutiliser plus tard si besoin :
 // const SHARED_CALENDAR_ID = 'espaceparta.gee@gmail.com';
-
-// Parse "YYYY-MM-DD" comme date locale, pas UTC (évite le décalage de fuseau horaire)
-function parseLocalDate(dateStr: string): Date {
-	const [y, m, d] = dateStr.split('-').map(Number);
-	return new Date(y, m - 1, d);
-}
-
-// Lundi de la semaine contenant `dateParam` (ou aujourd'hui si absent)
-function getWeekStart(dateParam: string | null): Date {
-	const base = dateParam ? parseLocalDate(dateParam) : new Date();
-	const day = base.getDay(); // 0 = dimanche, 1 = lundi, ...
-	const diffToMonday = day === 0 ? -6 : 1 - day;
-	const monday = new Date(base);
-	monday.setDate(base.getDate() + diffToMonday);
-	monday.setHours(0, 0, 0, 0);
-	return monday;
-}
 
 export const load: PageServerLoad = async ({ url }) => {
 	const weekStart = getWeekStart(url.searchParams.get('semaine'));
@@ -37,6 +24,23 @@ export const load: PageServerLoad = async ({ url }) => {
 
 	return {
 		weekStart: weekStart.toISOString(),
-		events
+		events: events.map((e) => ({
+			...e,
+			calBookingUid: e.iCalUID?.match(/^(.+)@Cal\.com$/)?.[1]
+		}))
 	};
+};
+
+export const actions: Actions = {
+	cancel: async ({ request }) => {
+		const data = await request.formData();
+		const id = String(data.get('id'));
+		const calBookingUid = String(data.get('calBookingUid') ?? '') || undefined;
+
+		if (calBookingUid) {
+			await cancelCalBooking(calBookingUid);
+		} else {
+			await deleteGoogleEvent(id);
+		}
+	}
 };
