@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { ConfirmDialog } from '$lib/client/components/admin/atoms/ConfirmDialog';
 	import type { GoogleCalendarEvent } from '$lib/server/google-calendar';
+	import { enhance } from '$app/forms';
 
 	let {
-		event,
-		onDelete
+		event
 	}: {
 		event: GoogleCalendarEvent | null;
-		onDelete: (event: GoogleCalendarEvent) => void;
 	} = $props();
 
 	let dialog: HTMLDialogElement;
 	let confirmDialog: ReturnType<typeof ConfirmDialog>;
+	let form: HTMLFormElement;
 
 	const dateFmt = new Intl.DateTimeFormat('fr-FR', {
 		weekday: 'long',
@@ -63,14 +63,25 @@
 </dialog>
 
 {#if event}
+	<form
+		bind:this={form}
+		method="POST"
+		action="?/cancel"
+		hidden
+		use:enhance={() =>
+			async ({ update }) => {
+				dialog.close();
+				await update();
+			}}
+	>
+		<input type="hidden" name="id" value={event.id} />
+		<input type="hidden" name="calBookingUid" value={event.calBookingUid ?? ''} />
+	</form>
 	<ConfirmDialog
 		bind:this={confirmDialog}
 		title="Supprimer le rendez-vous ?"
 		message={`« ${event.summary ?? 'Sans titre'} » sera supprimé.`}
 		confirmLabel="Confirmer la suppression"
-		onConfirm={() => {
-			dialog.close();
-			onDelete(event);
-		}}
+		onConfirm={() => form.requestSubmit()}
 	/>
 {/if}

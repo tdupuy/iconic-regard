@@ -67,3 +67,10 @@ export async function getBookings(
 
 	return calRequest<CalBooking[]>(`/bookings?${params.toString()}`);
 }
+
+export async function cancelCalBooking(uid: string) {
+	await calRequest(`/bookings/${uid}/cancel`, {
+		method: 'POST',
+		body: JSON.stringify({ cancellationReason: 'Annulé par le professionnel' })
+	});
+}

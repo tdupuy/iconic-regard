@@ -187,8 +187,4 @@
 		{/each}
 	</div>
 </div>
-<EventDetailsDialog
-	bind:this={details}
-	event={selected}
-	onDelete={(e) => console.log('delete', e.id)}
-/>
+<EventDetailsDialog bind:this={details} event={selected} />

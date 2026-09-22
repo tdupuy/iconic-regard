@@ -1,6 +1,9 @@
 import type { PageServerLoad } from './$types';
 import { getCalendarEvents } from '$lib/server/google-calendar';
 import { getWeekStart } from '$lib/utils';
+import { cancelCalBooking } from '$lib/server/cal';
+import { deleteGoogleEvent } from '$lib/server/google-calendar';
+import type { Actions } from './$types';
 
 const CALENDAR_ID = 'primary';
 // Calendrier partagé, à réutiliser plus tard si besoin :
@@ -26,4 +29,18 @@ export const load: PageServerLoad = async ({ url }) => {
 			calBookingUid: e.iCalUID?.match(/^(.+)@Cal\.com$/)?.[1]
 		}))
 	};
+};
+
+export const actions: Actions = {
+	cancel: async ({ request }) => {
+		const data = await request.formData();
+		const id = String(data.get('id'));
+		const calBookingUid = String(data.get('calBookingUid') ?? '') || undefined;
+
+		if (calBookingUid) {
+			await cancelCalBooking(calBookingUid);
+		} else {
+			await deleteGoogleEvent(id);
+		}
+	}
 };
