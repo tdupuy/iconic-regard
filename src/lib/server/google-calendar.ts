@@ -7,6 +7,8 @@ export interface GoogleCalendarEvent {
 	id: string;
 	summary?: string;
 	description?: string;
+	iCalUID: string;
+	calBookingUid?: string;
 	start: { dateTime?: string; date?: string };
 	end: { dateTime?: string; date?: string };
 	attendees?: { email: string; displayName?: string }[];
@@ -63,12 +65,10 @@ async function calendarRequest<T>(path: string, options: RequestInit = {}): Prom
 		}
 	});
 
-	if (!res.ok) {
-		const body = await res.text();
-		throw new Error(`Google Calendar API error (${res.status}): ${body}`);
-	}
+	if (!res.ok) throw new Error(`Google Calendar API error (${res.status})`);
+	if (res.status === 204) return undefined as T;
 
-	return res.json() as Promise<T>;
+	return res.json();
 }
 
 export async function getCalendarEvents(opts: {
@@ -113,4 +113,10 @@ export async function createCalendarEvent(opts: {
 			})
 		}
 	);
+}
+
+export async function deleteGoogleEvent(id: string, calendarId: string = 'primary'): Promise<void> {
+	await calendarRequest(`/calendars/${encodeURIComponent(calendarId)}/events/${id}`, {
+		method: 'DELETE'
+	});
 }
