@@ -1,33 +1,29 @@
 <script lang="ts">
 	import { User, Sparkles, Calendar } from '@lucide/svelte';
+	import type { PageData } from './$types';
+
 	import {
 		TypicalFormField,
 		ReadonlyFormField
 	} from '$lib/client/components/admin/atoms/FormFields';
 
-	let { customerName }: { customerName: string } = $props();
+	let { data }: { data: PageData } = $props();
 
 	let date = $state('');
-
-	const prestationOptions = [
-		{ value: 'regard', label: 'Beauté du regard' },
-		{ value: 'soin_visage', label: 'Soin du visage' },
-		{ value: 'epilation', label: 'Épilation' }
-	];
 
 	let prestationType = $state('');
 	let prestationQuery = $state('');
 	let isDropdownOpen = $state(false);
 
 	const filteredOptions = $derived(
-		prestationOptions.filter((option) =>
-			option.label.toLowerCase().includes(prestationQuery.toLowerCase())
+		data.services.filter((option) =>
+			option.name.toLowerCase().includes(prestationQuery.toLowerCase())
 		)
 	);
 
-	function selectPrestation(option: (typeof prestationOptions)[number]) {
-		prestationType = option.value;
-		prestationQuery = option.label;
+	function selectPrestation(option: (typeof data.services)[number]) {
+		prestationType = String(option.id);
+		prestationQuery = option.name;
 		isDropdownOpen = false;
 	}
 
@@ -35,7 +31,7 @@
 	function handleBlur() {
 		setTimeout(() => {
 			isDropdownOpen = false;
-			const match = prestationOptions.find((option) => option.label === prestationQuery);
+			const match = data.services.find((option) => option.name === prestationQuery);
 			if (!match) {
 				prestationType = '';
 				prestationQuery = '';
@@ -47,7 +43,7 @@
 <form class="card w-full">
 	<div class="card-body w-full gap-3 rounded-xl border border-gray-400 bg-white p-4">
 		<div class="flex flex-col gap-1">
-			<ReadonlyFormField label="Client" icon={User} value={customerName} />
+			<ReadonlyFormField label="Client" icon={User} value="" />
 		</div>
 
 		<div class="flex flex-col gap-1">
@@ -70,10 +66,10 @@
 					<ul
 						class="menu bg-base-100 rounded-box absolute z-10 mt-1 w-full border border-gray-200 shadow-md"
 					>
-						{#each filteredOptions as option (option.value)}
+						{#each filteredOptions as option (option.id)}
 							<li>
 								<button type="button" onmousedown={() => selectPrestation(option)}>
-									{option.label}
+									{option.name}
 								</button>
 							</li>
 						{/each}
