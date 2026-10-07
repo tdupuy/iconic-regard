@@ -42,22 +42,6 @@
 		isService?: boolean;
 	} = $props();
 	let expanded = $state(false);
-
-	let imageExists = $state(false);
-
-	async function checkImage(url: string) {
-		if (!url || url === 'null' || url === 'undefined') {
-			imageExists = false;
-			return;
-		}
-		try {
-			const res = await fetch(url, { method: 'HEAD' });
-			imageExists = res.ok;
-		} catch {
-			imageExists = false;
-		}
-	}
-	checkImage(imgUrl);
 </script>
 
 <Cal {namespace} />
@@ -65,13 +49,9 @@
 <div class="mx-2 rounded-lg border {cardBorder} bg-white p-4 shadow-sm transition-all duration-300">
 	<div class="mb-4 flex items-center">
 		<div class="mr-4 h-16 w-16 overflow-hidden rounded-full border-2 {border}">
-			{#if imageExists}
-				<img src={imgUrl} alt="Lash Lift" class="h-full w-full object-cover" />
-			{:else}
-				<div class="flex h-full w-full items-center justify-center {bgImg}">
-					<Heart class="h-4 w-4 {iconImg}" fill="transparent" />
-				</div>
-			{/if}
+			<div class="flex h-full w-full items-center justify-center {bgImg}">
+				<Heart class="h-4 w-4 {iconImg}" fill="transparent" />
+			</div>
 		</div>
 		<div class="flex-1">
 			<p
