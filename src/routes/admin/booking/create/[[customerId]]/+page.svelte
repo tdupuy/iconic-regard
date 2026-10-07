@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { User, Sparkles, Calendar } from '@lucide/svelte';
+	import { User, Sparkles, Calendar, UserPlus } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import { page } from '$app/state';
 	import {
-		TypicalFormField,
 		ReadonlyFormField,
 		ComboboxFormField
 	} from '$lib/client/components/admin/atoms/FormFields';
@@ -20,21 +19,29 @@
 	);
 </script>
 
-<div class="card-body w-full gap-3 rounded-xl border border-gray-400 bg-white p-4">
-	{#if page.params.customerId}
-		<ReadonlyFormField label="Client" icon={User} value={data.customers[0]?.name ?? ''} />
-		<input type="hidden" name="customer_id" value={page.params.customerId} />
-	{:else}
-		<ComboboxFormField
-			id="customer"
-			name="customer_id"
-			label="Client"
-			icon={User}
-			items={data.customers}
-			placeholder="Rechercher un client..."
-			bind:value={customerId}
-		/>
-	{/if}
+<div
+	class="card-body border-base-300 mx-auto w-full max-w-lg gap-5 rounded-xl border bg-white p-4 sm:p-6"
+>
+	<div class="flex flex-col gap-1.5">
+		{#if page.params.customerId}
+			<ReadonlyFormField label="Client" icon={User} value={data.customers[0]?.name ?? ''} />
+			<input type="hidden" name="customer_id" value={page.params.customerId} />
+		{:else}
+			<ComboboxFormField
+				id="customer"
+				name="customer_id"
+				label="Client"
+				icon={User}
+				items={data.customers}
+				placeholder="Rechercher un client..."
+				bind:value={customerId}
+			/>
+			<a href="/admin/customers/create" class="btn btn-ghost btn-xs gap-1 self-end">
+				<UserPlus class="size-3.5" />
+				Nouveau client
+			</a>
+		{/if}
+	</div>
 
 	<ComboboxFormField
 		id="prestation_type"
@@ -46,34 +53,34 @@
 		bind:value={prestationType}
 	/>
 
-	<div class="flex flex-col gap-1">
-		<label for="date" class="flex items-center gap-1 text-sm font-medium">
-			<Calendar class="text-primary h-3.5 w-3.5 shrink-0" />
+	<div class="flex flex-col gap-2">
+		<span class="flex items-center gap-1 text-sm font-medium">
+			<Calendar class="text-primary size-3.5 shrink-0" />
 			Date
-		</label>
-		<div class="relative">
-			{#if selectedService && selectedCustomer}
-				<button
-					type="button"
-					class="btn btn-primary w-full"
-					disabled={!selectedService || !selectedCustomer}
-					data-cal-link={selectedService ? `${PUBLIC_CAL_LINK}/${selectedService.slug}` : undefined}
-					data-cal-namespace={selectedService?.slug}
-					data-cal-config={JSON.stringify({
-						layout: 'month_view',
-						name: selectedCustomer?.name,
-						email: selectedCustomer?.email,
-						attendeePhoneNumber: selectedCustomer?.phoneNumber
-					})}
-				>
-					Choisir un créneau
-				</button>
-				<Cal namespace={selectedService?.slug} />
-			{:else}
-				<p class="text-sm opacity-60">
-					Choisis un client et une prestation pour afficher le calendrier.
-				</p>
-			{/if}
-		</div>
+		</span>
+
+		<button
+			type="button"
+			class="btn btn-primary w-full"
+			disabled={!selectedService || !selectedCustomer}
+			data-cal-link={selectedService ? `${PUBLIC_CAL_LINK}/${selectedService.slug}` : undefined}
+			data-cal-namespace={selectedService?.slug}
+			data-cal-config={JSON.stringify({
+				layout: 'month_view',
+				name: selectedCustomer?.name,
+				email: selectedCustomer?.email,
+				attendeePhoneNumber: selectedCustomer?.phoneNumber
+			})}
+		>
+			Choisir un créneau
+		</button>
+
+		{#if selectedService && selectedCustomer}
+			<Cal namespace={selectedService.slug} />
+		{:else}
+			<p class="text-xs opacity-60">
+				Choisis un client et une prestation pour afficher le calendrier.
+			</p>
+		{/if}
 	</div>
 </div>
