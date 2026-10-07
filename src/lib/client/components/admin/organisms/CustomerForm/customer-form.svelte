@@ -170,6 +170,10 @@
 						<span>Notes</span>
 					</div>
 				</a>
+				<hr />
+				<a href="/admin/booking/create/{customer.id}" class="btn btn-primary">
+					Prendre rendez-vous
+				</a>
 			{/if}
 		</div>
 		<button type="submit" class="btn btn-primary mt-5 w-full" disabled={submitting}>
