@@ -9,6 +9,7 @@ export interface GoogleCalendarEvent {
 	description?: string;
 	iCalUID: string;
 	calBookingUid?: string;
+	colorId?: string;
 	start: { dateTime?: string; date?: string };
 	end: { dateTime?: string; date?: string };
 	attendees?: { email: string; displayName?: string }[];
@@ -98,8 +99,9 @@ export async function createCalendarEvent(opts: {
 	description?: string;
 	start: string; // ISO 8601
 	end: string; // ISO 8601
+	colorId?: string;
 }): Promise<GoogleCalendarEvent> {
-	const { calendarId, summary, description, start, end } = opts;
+	const { calendarId, summary, description, start, end, colorId } = opts;
 
 	return calendarRequest<GoogleCalendarEvent>(
 		`/calendars/${encodeURIComponent(calendarId)}/events`,
@@ -108,6 +110,7 @@ export async function createCalendarEvent(opts: {
 			body: JSON.stringify({
 				summary,
 				description,
+				colorId,
 				start: { dateTime: start },
 				end: { dateTime: end }
 			})
