@@ -30,7 +30,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		summary: 'cils',
 		description: booking.description ?? '',
 		start: booking.startTime,
-		end: booking.endTime
+		end: booking.endTime,
+		colorId: '5'
 	});
 
 	return new Response('ok', { status: 200 });
