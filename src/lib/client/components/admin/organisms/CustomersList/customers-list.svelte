@@ -7,7 +7,7 @@
 
 	let { customers } = $props();
 
-	let view: 'card' | 'list' = $state('card');
+	let view: 'card' | 'list' = $state('list');
 	let search = $state('');
 
 	const reasonLabels: Record<'phone_match' | 'email_match' | 'name_match', string> = {
