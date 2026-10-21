@@ -1,3 +1,7 @@
+<svelte:head>
+	<meta name="robots" content="noindex, follow" />
+</svelte:head>
+
 <section class="mentions-legales">
 	<h1>Mentions légales</h1>
 	<p><em>En vigueur au 12/08/2026</em></p>
@@ -38,17 +42,21 @@
 
 	<h2>Collecte des données</h2>
 	<p>
-		Le Site assure à l'Utilisateur une collecte et un traitement des données personnelles dans le
-		respect de la vie privée conformément à la loi n°78-17 du 6 janvier 1978 relative à
-		l'informatique, aux fichiers et aux libertés et dans le respect du règlement (UE) 2016/679 du
-		Parlement européen et du Conseil du 27 avril 2016 (ci-après, ensemble, la « Règlementation
-		applicable en matière de protection des données à caractère personnel »).
+		Pour gérer les rendez-vous et le suivi de la clientèle, l'activité Iconic Regard traite le nom,
+		le prénom et, le cas échéant, l'adresse e-mail et le numéro de téléphone. La prise de
+		rendez-vous utilise le service Cal.com, qui traite les informations nécessaires à la
+		réservation. Dans la base de données du Site, l'adresse e-mail et le numéro de téléphone sont
+		chiffrés ; le nom et le prénom ne le sont pas. Les données sont conservées le temps nécessaire à
+		la gestion de la clientèle et, le cas échéant, pendant les durées imposées par la loi.
 	</p>
 	<p>
-		En vertu de la Règlementation applicable en matière de protection des données à caractère
-		personnel, l'Utilisateur dispose d'un droit d'accès, de rectification, de suppression et
-		d'opposition de ses données personnelles, qu'il peut exercer en s'adressant à l'hébergeur du
-		Site, qui transmettra la demande à l'Éditeur.
+		Toute personne peut demander l'accès, la rectification ou l'effacement de ses données, ainsi que
+		la limitation du traitement ou s'y opposer, dans les conditions prévues par la réglementation.
+		Les demandes d'effacement sont prises en compte sous réserve des obligations légales de
+		conservation. Pour exercer ces droits, contactez l'Éditeur via la page <a href="/contact"
+			>Me contacter</a
+		> ; votre demande sera transmise à l'activité Iconic Regard. Vous pouvez également adresser une réclamation
+		à la CNIL.
 	</p>
 	<p>
 		Toute utilisation, reproduction, diffusion, commercialisation, modification de tout ou partie du
