@@ -1,3 +1,7 @@
+<svelte:head>
+	<meta name="robots" content="noindex, follow" />
+</svelte:head>
+
 <section class="mentions-legales">
 	<h1>Mentions légales</h1>
 	<p><em>En vigueur au 12/08/2026</em></p>
